@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>TRESA Urban Nature Map Input Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style> 
+    body{
+        padding: 20px;
+    }
+    .tags-input { 
+        display: inline-block; 
+        position: relative; 
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        padding: 5px; 
+        box-shadow: 2px 2px 5px #00000033; 
+        width: 50%; 
+    } 
+
+    .tags-input ul { 
+        list-style: none; 
+        padding: 0; 
+        margin: 0; 
+    } 
+
+    .tags-input li { 
+        display: inline-block; 
+        background-color: #f2f2f2; 
+        color: #333; 
+        border-radius: 20px; 
+        padding: 5px 10px; 
+        margin-right: 5px; 
+        margin-bottom: 5px; 
+    } 
+
+    .tags-input input[type="text"] { 
+        border: none; 
+        outline: none; 
+        padding: 5px; 
+        font-size: 14px; 
+    } 
+
+    .tags-input input[type="text"]:focus { 
+        outline: none; 
+    } 
+
+    .tags-input .delete-button { 
+        background-color: transparent; 
+        border: none; 
+        color: #999; 
+        cursor: pointer; 
+        margin-left: 5px; 
+    } 
+</style> 
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>TRESA Urban Nature Map Input Form</h2>
+  <form>
+    <div class="mb-3">
+        <label for="name">Full Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Full Name">
+      </div>
+    <!-- Garden Location -->
+    <div class="mb-3">
+      <label for="postcode">Postcode</label>
+      <input type="text" class="form-control" id="postcode" placeholder="Enter your postcode ex. BS3 4PJ or we use Set Location API tool">
+    </div>
+    <!-- Nature Type -->
+    <div class="mb-3">
+        <label for="natureType">Nature Type</label>
+        <input type="text" class="form-control" id="natureType" placeholder="Specify what type of nature can be found in your area e.x 'Bushes with Bees' ">
+        </div>
+
+
+    <div class="mb-3">
+      <label for="areaType">Area type (Public or Private)</label>
+      <select class="form-select" id="areaType">
+        <option value="public"> Please Select Area Type </option>
+        <option value="public"> Public </option>
+        <option value="private"> Private </option>
+
+      </select>
+    </div>
+
+    <!-- Garden Size/Dimensions -->
+    <div class="mb-3">
+      <label for="gardenSize">Garden Size/Dimensions</label>
+      <input type="text" class="form-control" id="gardenSize" placeholder="I want an api where it takes them too a map where they can draw a zone around their nature reserve">
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="gardenDescription">Garden Description</label>
+      <textarea class="form-control" id="gardenDescription" rows="3" placeholder="Describe your garden"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="imageUpload">Upload Images (for social media)</label>
+        <input type="file" class="form-control" id="imageUpload" accept="image/*">
+      </div>
+
+    <!-- Anonymous -->
+    <div class="mb-3">
+      <label for="Anonymous">Anonymous</label>
+      <input type="checkbox" class="form-check-input" id="Anonymous"> Upload your data Anonymously. If you would like to upload your data but do no want it represented with a marker on the map, tick the box
+    </div>
+    <div class="mb-3">
+        <label for="images4socials">By placing a tick in the box below you are allowing TRESA to use your images for our Social Media channels</label>
+        <input type="checkbox" class="form-check-input" id="images4socials"> 
+      </div>
+
+    <div class="tags-input">
+        <label for="tags">Tags (Press Enter to create new tag)</label>
+        <ul id="tags"></ul> 
+        <input type="text" id="input-tag" 
+            placeholder="Enter tag name" /> 
+    </div> 
+    
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script> 
+      
+    // Get the tags and input elements from the DOM 
+    const tags = document.getElementById('tags'); 
+    const input = document.getElementById('input-tag'); 
+
+    // Add an event listener for keydown on the input element 
+    input.addEventListener('keydown', function (event) { 
+
+        // Check if the key pressed is 'Enter' 
+        if (event.key === 'Enter') { 
+          
+            // Prevent the default action of the keypress 
+            // event (submitting the form) 
+            event.preventDefault(); 
+          
+            // Create a new list item element for the tag 
+            const tag = document.createElement('li'); 
+          
+            // Get the trimmed value of the input element 
+            const tagContent = input.value.trim(); 
+          
+            // If the trimmed value is not an empty string 
+            if (tagContent !== '') { 
+          
+                // Set the text content of the tag to  
+                // the trimmed value 
+                tag.innerText = tagContent; 
+
+                // Add a delete button to the tag 
+                tag.innerHTML += '<button class="delete-button">X</button>'; 
+                  
+                // Append the tag to the tags list 
+                tags.appendChild(tag); 
+                  
+                // Clear the input element's value 
+                input.value = ''; 
+            } 
+        } 
+    }); 
+
+    // Add an event listener for click on the tags list 
+    tags.addEventListener('click', function (event) { 
+
+        // If the clicked element has the class 'delete-button' 
+        if (event.target.classList.contains('delete-button')) { 
+          
+            // Remove the parent element (the tag) 
+            event.target.parentNode.remove(); 
+        } 
+    }); 
+</script>
+</body>
+</html>
