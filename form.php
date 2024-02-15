@@ -22,11 +22,11 @@ include 'dbcon.php';
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email" required>
+            <input type="email" id="email" name="email" required>
         </div>
         <div>
             <label for="uaddress">1st line of Address:</label>
-            <input type="text" id="email" name="uaddress" required>
+            <input type="text" id="addresss" name="uaddress" required>
         </div>
         <div>
             <label for="postcode">Postcode</label>
