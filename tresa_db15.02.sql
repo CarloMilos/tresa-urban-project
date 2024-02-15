@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2024 at 11:13 PM
+-- Generation Time: Feb 15, 2024 at 11:29 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `post` (
   `ta_post_id` int(11) NOT NULL,
   `ta_post_add` varchar(45) NOT NULL,
+  `ta_post_postcode` varchar(50) DEFAULT NULL,
   `ta_post_desc` varchar(1000) NOT NULL,
   `ta_post_dim` float NOT NULL,
   `ta_dim_unit` varchar(10) DEFAULT NULL,
@@ -42,11 +43,8 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`ta_post_id`, `ta_post_add`, `ta_post_desc`, `ta_post_dim`, `ta_dim_unit`, `ta_post_images`, `ta_post_anon`, `FK_user_ta_user_id`) VALUES
-(4, 'ad', '1221', 12, 'cm2', 0x666f726d696d616765732f444c2e706e67, '1', 10),
-(5, 'ad', '1221', 12, 'cm2', 0x666f726d696d616765732f444c2e706e67, '1', 11),
-(6, '1212', '12211', 1221, 'cm2', 0x666f726d696d616765732f636d7a2e706e67, '1', 12),
-(7, 'mayb', 'dsdsa', 12, 'cm2', 0x666f726d696d616765732f636d7a2e706e67, '1', 13);
+INSERT INTO `post` (`ta_post_id`, `ta_post_add`, `ta_post_postcode`, `ta_post_desc`, `ta_post_dim`, `ta_dim_unit`, `ta_post_images`, `ta_post_anon`, `FK_user_ta_user_id`) VALUES
+(8, '8 Walker Way', 'BS3 4AD', 'hAS THIS AND THTA', 12, 'cm2', 0x666f726d696d616765732f636d7a2e706e67, '1', 14);
 
 -- --------------------------------------------------------
 
@@ -65,11 +63,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`ta_user_id`, `ta_user_name`, `ta_user_email`) VALUES
-(9, 'ok', 'not@gmai.c'),
-(10, 'das', 'adssd@gmail.com'),
-(11, 'das', 'adssd@gmail.com'),
-(12, 'wait', 'asda@gmail.com'),
-(13, 'workk', 'wae@gmail.com');
+(14, 'Suzanne', 'suzanna@tresa');
 
 --
 -- Indexes for dumped tables
@@ -96,13 +90,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `ta_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ta_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `ta_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ta_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

@@ -40,9 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Insert post information into the post table
-        $stmt_post = $pdo->prepare("INSERT INTO post (ta_post_add, ta_post_dim, ta_dim_unit, ta_post_desc, ta_post_images, ta_post_anon, FK_user_ta_user_id) VALUES (:uaddress, :dimensions, :unit, :garden_description, :image_path, :anon, :user_id)");
+        $stmt_post = $pdo->prepare("INSERT INTO post (ta_post_add, ta_post_postcode, ta_post_dim, ta_dim_unit, ta_post_desc, ta_post_images, ta_post_anon, FK_user_ta_user_id) VALUES (:uaddress, :postcode, :dimensions, :unit, :garden_description, :image_path, :anon, :user_id)");
         $stmt_post->bindParam(':user_id', $user_id);
         $stmt_post->bindParam(':uaddress', $address);
+        $stmt_post->bindParam(':postcode', $postcode);
         $stmt_post->bindParam(':dimensions', $dimensions);
         $stmt_post->bindParam(':unit', $unit);
         $stmt_post->bindParam(':garden_description', $garden_description);
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Get the last inserted post ID
         $post_id = $pdo->lastInsertId();
-        
+
         // Redirect to success page
         header("Location: formsuccess.php");
         exit();
