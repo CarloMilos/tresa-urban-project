@@ -52,35 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Get the last inserted post ID
         $post_id = $pdo->lastInsertId();
-
-        // Insert tags into the tag table and establish relationship with post in post_tag table
-        foreach ($tags as $tag) {
-            $tag = trim($tag); // Remove any leading/trailing whitespace
-            if (!empty($tag)) {
-                // Check if the tag already exists in the tag table
-                $stmt_tag_check = $pdo->prepare("SELECT tag_id FROM tags WHERE tag_name = :tag");
-                $stmt_tag_check->bindParam(':tag', $tag);
-                $stmt_tag_check->execute();
-                $row = $stmt_tag_check->fetch(PDO::FETCH_ASSOC);
-                if ($row) {
-                    // Tag exists, get its ID
-                    $tag_id = $row['tag_id'];
-                } else {
-                    // Tag doesn't exist, insert it into the tag table
-                    $stmt_tag_insert = $pdo->prepare("INSERT INTO tags (tag_name) VALUES (:tag)");
-                    $stmt_tag_insert->bindParam(':tag', $tag);
-                    $stmt_tag_insert->execute();
-                    // Get the last inserted tag ID
-                    $tag_id = $pdo->lastInsertId();
-                }
-                // Establish relationship by inserting into post_tag table
-                $stmt_post_tag = $pdo->prepare("INSERT INTO tags_for_post (tags_tag_id, post_ta_post_id) VALUES (:tag_id, :post_id)");
-                $stmt_post_tag->bindParam(':post_id', $post_id);
-                $stmt_post_tag->bindParam(':tag_id', $tag_id);
-                $stmt_post_tag->execute();
-            }
-        }
-
+        
         // Redirect to success page
         header("Location: formsuccess.php");
         exit();
