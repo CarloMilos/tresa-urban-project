@@ -3,9 +3,14 @@
 <head>
     <title>Place and Remove Public Green Space Marker</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/geocodezip/geoxml3@master/polys/geoxml3.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/geocodezip/geoxml3@master/ProjectedOverlay.js"></script>
     <script>
         var map;
         var markers = [];
+
+        var myParser = new geoXML3.parser({map: map});
+        myParser.parse('tresa.kml');
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -16,6 +21,10 @@
             google.maps.event.addListener(map, 'click', function(event) {
                 placeMarker(event.latLng);
             });
+
+            var myParser = new geoXML3.parser({map: map});
+            myParser.parse('tresa.kml');
+
         }
 
         function placeMarker(location) {

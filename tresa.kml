@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Copy of TRESA Area</name>
+    <description><![CDATA[Map of the boundary for TRESA (Totterdown Residents Environmental & Social Action)]]></description>
+    <NetworkLink>
+      <name>Copy of TRESA Area</name>
+      <Link>
+        <href><![CDATA[https://www.google.com/maps/d/kml?forcekml=1&mid=1Y7xpgczYLMhEqF8JTfvEtNIuUgMIiDU]]></href>
+      </Link>
+    </NetworkLink>
+  </Document>
+</kml>
