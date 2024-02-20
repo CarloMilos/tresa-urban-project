@@ -8,7 +8,7 @@
     <script>
         var map;
         var marker;
-        var bristolZone;
+        var bristolLine;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -16,24 +16,42 @@
                 zoom: 15
             });
 
-            // Define the coordinates for the zone around Bristol
-            var bristolCoords = []
+            // Define the coordinates for the line around Bristol
+            var bristolCoords = [
+                {lat: 51.439663, lng: -2.579828}, 
+                {lat: 51.439872, lng: -2.578384},
+                {lat: 51.440810, lng: -2.575381},
+                {lat: 51.438461, lng: -2.572193},
+                {lat: 51.438765, lng: -2.569739},
+                {lat: 51.442080, lng: -2.569335},
+                {lat: 51.442057, lng: -2.571803},
+                {lat: 51.442618, lng: -2.572127},
+                {lat: 51.445237, lng: -2.578877},
+                {lat: 51.443624, lng: -2.584502},
+                {lat: 51.441657, lng: -2.583217},
+                {lat: 51.440446, lng: -2.581170},
+                {lat: 51.439663, lng: -2.579828}
+            ];
 
-            // Construct the polygon
-            bristolZone = new google.maps.Polygon({
-                paths: bristolCoords,
-                strokeColor: '#FF0000',
+            // Construct the line
+            bristolLine = new google.maps.Polyline({
+                path: bristolCoords,
+                geodesic: true,
+                strokeColor: '#073b38',
                 strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35
+                strokeWeight: 2
             });
 
-            // Set polygon on the map
-            bristolZone.setMap(map);
+            // Set line on the map
+            bristolLine.setMap(map);
 
-            google.maps.event.addListener(map, 'click', function(event) {
-                placeMarker(event.latLng);
+            // Listen for clicks on the map to drop a marker
+                        google.maps.event.addListener(map, 'click', function(event) {
+                if (google.maps.geometry.poly.containsLocation(event.latLng, bristolLine)) {
+                    placeMarker(event.latLng);
+                } else {
+                    alert("Please place the marker within the established area.");
+                }
             });
         }
 
