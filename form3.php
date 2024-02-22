@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRESA Resident Input Form</title>
+    <link rel="stylesheet" type="text/css" href="formstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
     <script>
         var map;
@@ -107,8 +111,10 @@
 
 </head>
 <body onload="initMap()">
+<div class="form_container">
     <div class="title">
         <h1> TRESA Urban Nature Reserve Input Form <h1>
+        <h3> Completing this form will input your information regarding you Nature Reserve  into the TRESA Urban Nature Reserve Database</h3>
     </div>
     <form action="formpost1.php" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
 
@@ -121,7 +127,7 @@
             <input type="email" id="email" name="email" required>
         </div>
         <label for="mapinputs">Please place a Marker on the location of your Nature Reserve</label>
-        <div id="map" style="height: 350px; width: 80%;"></div>
+        <div id="map" style="height: 350px; width: 100%;"></div>
         <input type="hidden" id="latitude" name="latitude">
         <input type="hidden" id="longitude" name="longitude">
         <div>
@@ -136,20 +142,32 @@
             <input type="number" id="dimensions" name="dimensions" required>
             <span>m<sup>2</sup></span>
         </div>
-
         <div>
             <label for="categories">Categories:</label><br>
-            <input type="checkbox" id="trees" name="categories[]" value="trees">
-            <label for="trees">Trees</label><br>
-            <input type="checkbox" id="flowers" name="categories[]" value="flowers">
-            <label for="flowers">Flowers</label><br>
-            <input type="checkbox" id="hedges" name="categories[]" value="hedges">
-            <label for="hedges">Hedges</label><br>
-            <input type="checkbox" id="birds" name="categories[]" value="birds">
-            <label for="birds">Birds</label><br>
-            <input type="checkbox" id="insects" name="categories[]" value="insects">
-            <label for="insects">Insects</label><br>
         </div>
+        <div id="categoriesDropdown">
+            <div class="checkbox-wrapper">
+                <label for="trees">Trees</label>
+                <input type="checkbox" id="trees" name="categories[]" value="trees">
+            </div>
+            <div class="checkbox-wrapper">
+                <label for="flowers">Flowers</label>
+                <input type="checkbox" id="flowers" name="categories[]" value="flowers">
+            </div>
+            <div class="checkbox-wrapper">
+                <label for="hedges">Hedges</label>
+                <input type="checkbox" id="hedges" name="categories[]" value="hedges">
+            </div>
+            <div class="checkbox-wrapper">
+                <label for="birds">Birds</label>
+                <input type="checkbox" id="birds" name="categories[]" value="birds">
+            </div>
+            <div class="checkbox-wrapper">
+                <label for="insects">Insects</label>
+                <input type="checkbox" id="insects" name="categories[]" value="insects">
+            </div>
+        </div>
+
         <div id="land-type-dropdown">
         <label for="land-type">Is the nature reserve on private or public land?</label>
         <select name="land-type" required>
@@ -176,18 +194,21 @@
             <label for="instagram-user-input">Instagram Username (So We Can Tag You!)</label>
             <input type="text" id="instagram-user-input" name="instagram-user" >
         </div>
-
-            <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">I agree to the terms and conditions INSERT LINK??</label>
+        <div>
+        <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
+        <input type="checkbox" id="terms" name="terms" required>
         </div>
         <div>
-            <h5> If you would like to opt out of having your data added to the map, tick the box below!</h5>
-            <input type="checkbox" id="anon" name="anon">
-            <label for="anonymous">Submit anonymously?</label>
+            <h4 class="anontype">If you would like to opt out of having your data added to the map, tick the box below!</h4>
+            <label for="anon">
+                <input type="checkbox" id="anon" name="anon">Submit anonymously?
+            </label>
         </div>
+
         <div>
             <button type="submit">Submit</button>
         </div>
     </form>
+</div>
 </body>
 </html>
