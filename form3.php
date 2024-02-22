@@ -114,7 +114,7 @@
 
         <div>
             <label for="uname">Name:</label>
-            <input type="text" id="name" name="uname" required>
+            <input type="text" id="Uname" name="uname" required>
         </div>
         <div>
             <label for="email">Email:</label>
@@ -134,11 +134,9 @@
         <div>
             <label for="dimensions">Dimensions:</label>
             <input type="number" id="dimensions" name="dimensions" required>
-            <select name="unit">
-                <option value="cm2">cm<sup>2</sup></option>
-                <option value="m2">m<sup>2</sup></option>
-            </select>
+            <span>m<sup>2</sup></span>
         </div>
+
         <div>
             <label for="categories">Categories:</label><br>
             <input type="checkbox" id="trees" name="categories[]" value="trees">
@@ -152,13 +150,24 @@
             <input type="checkbox" id="insects" name="categories[]" value="insects">
             <label for="insects">Insects</label><br>
         </div>
+        <div id="land-type-dropdown">
+        <label for="land-type">Is the nature reserve on private or public land?</label>
+        <select name="land-type" required>
+            <option value="" disabled selected>Please Select</option>
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+        </select>
+    </div>
+
+
         <div>
         <label for="image-upload">Image Upload:</label>
         <input type="file" id="image-upload" name="image-upload" accept="image/*" onchange="handleImageUpload()">
         </div>
         <div id="social-media-dropdown" style="display: none;">
             <label for="social-media-permission">Can we upload the photo for social media purposes (Instagram, Twitter, Facebook)?</label>
-            <select name="social-media-permission" required>
+            <select name="social-media-permission" >
+            <option value="" disabled selected>Please Select</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>

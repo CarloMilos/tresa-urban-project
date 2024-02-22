@@ -1,7 +1,7 @@
 <?php
 // Standard Database Connection
 $host = '127.0.0.1';
-$db   = 'tresa_db'; 
+$db   = 'tresadb'; 
 $pass = '';
 $charset = 'utf8mb4';
 $user = 'root';
