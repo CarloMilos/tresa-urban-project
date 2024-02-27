@@ -37,6 +37,10 @@
                 zoom: 15
             });
 
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+            });
+
             // Draw TRESA area on the map
             tresaArea = new google.maps.Polyline({
                 path: tresaCoords,
@@ -79,6 +83,51 @@
         }
 
         
+
+        function placeMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+
+            // Add the marker to the array
+            markers.push(marker);
+
+            // Update hidden inputs with marker data
+            document.getElementById('latitude').value = location.lat();
+            document.getElementById('longitude').value = location.lng();
+
+            // Show the remove button
+            document.getElementById('removeButton').style.display = 'block';
+
+            // Show the form for entering additional details
+            document.getElementById('markerDetailsForm').style.display = 'block';
+
+            // Add click event listener to the marker
+            marker.addListener('click', function() {
+                showRemoveButton(marker);
+            });
+        }
+
+        function showRemoveButton(marker) {
+            var removeButton = document.getElementById('removeButton');
+            removeButton.style.display = 'block';
+            removeButton.onclick = function() {
+                removeMarker(marker);
+            };
+        }
+
+        function removeMarker(marker) {
+            marker.setMap(null); // Remove the marker from the map
+            var index = markers.indexOf(marker);
+            if (index > -1) {
+                markers.splice(index, 1); // Remove the marker from the array
+            }
+            document.getElementById('removeButton').style.display = 'none'; // Hide the remove button
+            document.getElementById('markerDetailsForm').style.display = 'none'; // Hide the marker details form
+        }
+
+        
     </script>
 </head>
 <body onload="initMap()">
@@ -94,5 +143,34 @@
             </div>
 
         </div>
+    
+
+    <form id="markerDetailsForm" action="handle_marker.php" method="post" style="display: none;">
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        <div>
+            <label for="Name">Name:</label><br>
+            <input type="text" id="name" name="name" required>
+
+        </div>
+        <div>
+            <label for="dimensions">Dimensions:</label>
+            <input type="number" id="dimensions" name="dimensions" required>
+            <select name="unit">
+                <option value="cm2">cm<sup>2</sup></option>
+                <option value="m2">m<sup>2</sup></option>
+            </select>
+        </div>
+        <div>
+            <label for="garden-description">Garden Description:</label><br>
+            <textarea id="garden-description" name="garden-description" rows="4" cols="50" required></textarea>
+        </div>
+        <div>
+            <label for="image-upload">Image Upload:</label>
+            <input type="file" id="image-upload" name="image-upload" accept="image/*" required>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+    <button id="removeButton" style="display: none;">Remove Marker</button>
 </body>
 </html>
