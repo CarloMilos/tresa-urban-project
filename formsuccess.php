@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>Thank you for submitting the form!</h1>
-    <p>Your submission has been successfully received.</p>
+    <p>Your submission has been successfully received and will be validated by the TRESA Team</p>
 </body>
 </html>

@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Insert post information into the post table
-        $stmt_post = $pdo->prepare("INSERT INTO post (post_lat, post_long, post_desc, post_dimens, post_land_type, post_image, post_insta, post_permissions, post_anon, FK_user_id) VALUES (:lat, :long, :dimensions, :descr, :landtype, :image_path, :instagram, :permissions, :anon, :user_id)");
+        $stmt_post = $pdo->prepare("INSERT INTO post (post_lat, post_long, post_desc, post_dimens, post_land_type, post_image, post_insta, post_permissions, post_anon, FK_user_id) VALUES (:lat, :long, :descr, :dimensions, :landtype, :image_path, :instagram, :permissions, :anon, :user_id)");
         $stmt_post->bindParam(':user_id', $user_id);
         $stmt_post->bindParam(':lat', $latitude);
         $stmt_post->bindParam(':long', $longitude);
