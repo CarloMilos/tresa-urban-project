@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     
         // Redirect to success page
-        header("Location: formsuccess.php");
+        header("Location: map.php");
         exit();
     } catch(PDOException $e) {
         echo "Error: " . $e->getMessage();

@@ -1,3 +1,8 @@
+<?php
+require 'config.php';
+
+    $tresacords = json_encode($tresaCoords)
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,21 +26,7 @@
             });
 
             // Define the coordinates for the line around Bristol
-            var bristolCoords = [
-                {lat: 51.439663, lng: -2.579828}, 
-                {lat: 51.439872, lng: -2.578384},
-                {lat: 51.440810, lng: -2.575381},
-                {lat: 51.438461, lng: -2.572193},
-                {lat: 51.438765, lng: -2.569739},
-                {lat: 51.442080, lng: -2.569335},
-                {lat: 51.442057, lng: -2.571803},
-                {lat: 51.442618, lng: -2.572127},
-                {lat: 51.445237, lng: -2.578877},
-                {lat: 51.443624, lng: -2.584502},
-                {lat: 51.441657, lng: -2.583217},
-                {lat: 51.440446, lng: -2.581170},
-                {lat: 51.439663, lng: -2.579828}
-            ];
+            var bristolCoords = <?php echo $tresacords ?>
 
             // Construct the line
             bristolLine = new google.maps.Polyline({
@@ -90,21 +81,6 @@
         if (!marker) {
             alert("Please place a marker on the map before submitting the form.");
             event.preventDefault(); // Prevent form submission
-        }
-    }
-</script>
-    <script>
-    function handleImageUpload() {
-        var imageUpload = document.getElementById('image-upload');
-        var socialMediaDiv = document.getElementById('social-media-dropdown');
-        var instagramUserDiv = document.getElementById('instagram-user-div');
-
-        if (imageUpload.value) {
-            socialMediaDiv.style.display = 'block';
-            instagramUserDiv.style.display = 'block';
-        } else {
-            socialMediaDiv.style.display = 'none';
-            instagramUserDiv.style.display = 'none';
         }
     }
 </script>
@@ -176,24 +152,6 @@
             <option value="public">Public</option>
         </select>
     </div>
-
-
-        <div>
-        <label for="image-upload">Image Upload:</label>
-        <input type="file" id="image-upload" name="image-upload" accept="image/*" onchange="handleImageUpload()">
-        </div>
-        <div id="social-media-dropdown" style="display: none;">
-            <label for="social-media-permission">Can we upload the photo for social media purposes (Instagram, Twitter, Facebook)?</label>
-            <select name="social-media-permission" >
-            <option value="" disabled selected>Please Select</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
-        </div>
-        <div id="instagram-user-div" style="display: none;">
-            <label for="instagram-user-input">Instagram Username (So We Can Tag You!)</label>
-            <input type="text" id="instagram-user-input" name="instagram-user" >
-        </div>
         <div>
         <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
         <input type="checkbox" id="terms" name="terms" required>

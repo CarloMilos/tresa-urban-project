@@ -2,11 +2,32 @@
     // Include the config file
     require 'config.php';
 
+    require 'dbcon.php';
+
     //Get TRESA area coordinates from the config file and turn into JSON array
     $tresaCoords = json_encode($tresaCoords);
 
     //Get public green space areas coordinates from the config file and turn into JSON array
     $areas = json_encode($areas);
+
+    $markers = array(); // Array to store marker data
+
+    $sql = "SELECT * FROM post"; // Replace 'your_table' with your actual table name
+    $stmt = $pdo->query($sql);
+
+    // Fetching data row by row
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // Add each row as a marker to the markers array
+        $markers[] = array(
+            'lat' => $row['post_lat'],
+            'lng' => $row['post_long'],
+            'desc'=> $row['post_desc'],
+            'dimensions' => ['post_dimens'],
+        );
+    }
+
+        // Encode the markers array into JSON
+        $markers = json_encode($markers);
 ?>
 <style>
     <?php include 'styles.css'; ?>
@@ -18,8 +39,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
     <script>
         var map;
-        var markers = [];
         var polygons = [];
+        var markersData = <?php echo $markers; ?>; // Retrieve marker data from PHP
+
 
         // Initialise coordinates from config file as JS variables
         var tresaCoords = <?php echo $tresaCoords; ?>;
@@ -77,57 +99,27 @@
                         infoWindow.setContent(contentString);
                         infoWindow.setPosition(event.latLng);
                         infoWindow.open(map);
+                
                 });
+            }
+            // Add markers to the map
+            for (var i = 0; i < markersData.length; i++) {
+                addMarker(markersData[i]);
             }
             
         }
-
-        
-
-        function placeMarker(location) {
+        function addMarker(markerInfo) {
             var marker = new google.maps.Marker({
-                position: location,
+                position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
                 map: map
             });
 
-            // Add the marker to the array
-            markers.push(marker);
-
-            // Update hidden inputs with marker data
-            document.getElementById('latitude').value = location.lat();
-            document.getElementById('longitude').value = location.lng();
-
-            // Show the remove button
-            document.getElementById('removeButton').style.display = 'block';
-
-            // Show the form for entering additional details
-            document.getElementById('markerDetailsForm').style.display = 'block';
-
             // Add click event listener to the marker
             marker.addListener('click', function() {
-                showRemoveButton(marker);
+                infoWindow.setContent('Marker Location: ' + marker.getPosition().toString());
+                infoWindow.open(map, marker);
             });
         }
-
-        function showRemoveButton(marker) {
-            var removeButton = document.getElementById('removeButton');
-            removeButton.style.display = 'block';
-            removeButton.onclick = function() {
-                removeMarker(marker);
-            };
-        }
-
-        function removeMarker(marker) {
-            marker.setMap(null); // Remove the marker from the map
-            var index = markers.indexOf(marker);
-            if (index > -1) {
-                markers.splice(index, 1); // Remove the marker from the array
-            }
-            document.getElementById('removeButton').style.display = 'none'; // Hide the remove button
-            document.getElementById('markerDetailsForm').style.display = 'none'; // Hide the marker details form
-        }
-
-        
     </script>
 </head>
 <body onload="initMap()">
@@ -143,34 +135,6 @@
             </div>
 
         </div>
-    
 
-    <form id="markerDetailsForm" action="handle_marker.php" method="post" style="display: none;">
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
-        <div>
-            <label for="Name">Name:</label><br>
-            <input type="text" id="name" name="name" required>
-
-        </div>
-        <div>
-            <label for="dimensions">Dimensions:</label>
-            <input type="number" id="dimensions" name="dimensions" required>
-            <select name="unit">
-                <option value="cm2">cm<sup>2</sup></option>
-                <option value="m2">m<sup>2</sup></option>
-            </select>
-        </div>
-        <div>
-            <label for="garden-description">Garden Description:</label><br>
-            <textarea id="garden-description" name="garden-description" rows="4" cols="50" required></textarea>
-        </div>
-        <div>
-            <label for="image-upload">Image Upload:</label>
-            <input type="file" id="image-upload" name="image-upload" accept="image/*" required>
-        </div>
-        <input type="submit" value="Submit">
-    </form>
-    <button id="removeButton" style="display: none;">Remove Marker</button>
 </body>
 </html>
