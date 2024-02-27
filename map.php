@@ -8,11 +8,13 @@
     //Get public green space areas coordinates from the config file and turn into JSON array
     $areas = json_encode($areas);
 ?>
+<style>
+    <?php include 'styles.css'; ?>
+</style>    
 
 <!DOCTYPE html>
 <html>
     <title>Place and Remove Public Green Space Marker</title>
-    <link rel="stylesheet" href="styles.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
     <script>
         var map;
@@ -129,7 +131,18 @@
     </script>
 </head>
 <body onload="initMap()">
-    <div id="map" style="height: 400px; width: 50%;"></div>
+
+        <div class="container">
+
+            <div class="map-box">
+                <div id="map" style="height: 400px; width: 100%;"></div>
+            </div>
+
+            <div class="scroll-table">
+                test
+            </div>
+
+        </div>
     
 
     <form id="markerDetailsForm" action="handle_marker.php" method="post" style="display: none;">
