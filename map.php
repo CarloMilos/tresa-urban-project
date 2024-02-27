@@ -12,7 +12,22 @@
 
     $markers = array(); // Array to store marker data
 
-    $sql = "SELECT * FROM post"; // Replace 'your_table' with your actual table name
+    $sql = "SELECT 
+    post_id,
+    post_lat,
+    post_long,
+    post_desc,
+    post_dimens,
+    GROUP_CONCAT(category_name) AS categories
+FROM 
+    post
+JOIN 
+    category_has_post ON post.post_id = category_has_post.FK_post_id
+JOIN 
+    category ON category_has_post.FK_category_id = category.category_id
+GROUP BY 
+    post_id, post_lat, post_long, post_desc;";
+
     $stmt = $pdo->query($sql);
 
     // Fetching data row by row
@@ -22,7 +37,8 @@
             'lat' => $row['post_lat'],
             'lng' => $row['post_long'],
             'desc'=> $row['post_desc'],
-            'dimensions' => ['post_dimens'],
+            'dimensions' => $row['post_dimens'],
+            'categories' => $row['categories'],
         );
     }
 
@@ -108,7 +124,7 @@
             }
             
         }
-        function addMarker(markerInfo) {
+            function addMarker(markerInfo) {
             var marker = new google.maps.Marker({
                 position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
                 map: map
@@ -116,7 +132,12 @@
 
             // Add click event listener to the marker
             marker.addListener('click', function() {
-                infoWindow.setContent('Marker Location: ' + marker.getPosition().toString());
+                var contentString = '<div>' +
+                                    '<p>Description: ' + markerInfo.desc + '</p>' +
+                                    '<p>Dimensions: ' + markerInfo.dimensions + '</p>' +
+                                    '<p>Categories:' + markerInfo.categories + '</p>' +
+                                    '</div>';
+                infoWindow.setContent(contentString);
                 infoWindow.open(map, marker);
             });
         }
