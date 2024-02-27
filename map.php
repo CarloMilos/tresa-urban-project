@@ -59,6 +59,10 @@
                 zoom: 15
             });
 
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+            });
+
             // Draw TRESA area on the map
             tresaArea = new google.maps.Polyline({
                 path: tresaCoords,
