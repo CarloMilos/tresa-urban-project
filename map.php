@@ -59,10 +59,6 @@
                 zoom: 15
             });
 
-            google.maps.event.addListener(map, 'click', function(event) {
-                placeMarker(event.latLng);
-            });
-
             // Draw TRESA area on the map
             tresaArea = new google.maps.Polyline({
                 path: tresaCoords,
@@ -108,6 +104,7 @@
             }
             
         }
+<<<<<<< HEAD
         function addMarker(markerInfo) {
             var marker = new google.maps.Marker({
                 position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
@@ -120,6 +117,8 @@
                 infoWindow.open(map, marker);
             });
         }
+
+
     </script>
 </head>
 <body onload="initMap()">
@@ -135,6 +134,9 @@
             </div>
 
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ae1834fe3b3378eb990e72ee7a31e06c8878b657
 </body>
 </html>
