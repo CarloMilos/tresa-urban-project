@@ -23,29 +23,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $description = $_POST['garden-description'];
         $dimensions = $_POST['dimensions'];
         $land_type = $_POST['land-type'];
-        $social_permissions = $_POST['social-media-permission'];
-        $instagram = $_POST['instagram-user'];
         $anonymous = isset($_POST['anon']) ? 1 : 0;
 
-        $image_path = '';
-        if(isset($_FILES['image-upload'])){
-            $file_name = $_FILES['image-upload']['name'];
-            $file_tmp = $_FILES['image-upload']['tmp_name'];
-            $image_path = "formimages/" . $file_name;
-            move_uploaded_file($file_tmp, $image_path);
-        }
-
         // Insert post information into the post table
-        $stmt_post = $pdo->prepare("INSERT INTO post (post_lat, post_long, post_desc, post_dimens, post_land_type, post_image, post_insta, post_permissions, post_anon, FK_user_id) VALUES (:lat, :long, :descr, :dimensions, :landtype, :image_path, :instagram, :permissions, :anon, :user_id)");
+        $stmt_post = $pdo->prepare("INSERT INTO post (post_lat, post_long, post_desc, post_dimens, post_land_type, post_anon, FK_user_id) VALUES (:lat, :long, :descr, :dimensions, :landtype, :anon, :user_id)");
         $stmt_post->bindParam(':user_id', $user_id);
         $stmt_post->bindParam(':lat', $latitude);
         $stmt_post->bindParam(':long', $longitude);
         $stmt_post->bindParam(':dimensions', $dimensions);
         $stmt_post->bindParam(':descr', $description);
         $stmt_post->bindParam(':landtype', $land_type);
-        $stmt_post->bindParam(':image_path', $image_path);
-        $stmt_post->bindParam(':instagram', $instagram);
-        $stmt_post->bindParam(':permissions', $social_permissions);
         $stmt_post->bindParam(':anon', $anonymous);
         $stmt_post->execute();
 
