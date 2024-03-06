@@ -65,16 +65,20 @@ CREATE TABLE `public_greenspaces` (
 --
 
 INSERT INTO `public_greenspaces` (`ID`, `Name`, `Location`, `Size`, `Description`, `DateEstablished`, `Lat`, `Long`, `Image`, `Type`, `IconPath`) VALUES
-(1, 'Park bath ', 'County.St', 3293.06, 'Normal Park', NULL, 51.442552, -2.576018, 'https://visitbristol.co.uk/dbimgs/All%20Together%20Now%20-%20Joshua%20Perrett.jpg', 'Park', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(2, 'Park', 'Park.st', 5615.15, NULL, NULL, 51.441638, -2.572544, NULL, 'Park', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(3, 'School Road Park', 'School Rd, Totterdown, Bristol BS4 3DJ, Royaume-Uni', 3457.86, NULL, NULL, 51.440401, -2.572793, NULL, 'Park', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(4, 'Zone A', 'Wells Rd, Totterdown, Bristol BS4 3AL, Royaume-Uni', 1090.18, NULL, NULL, 51.441444, -2.576156, NULL, 'Park', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(5, 'Greens', '3 Knowle Rd, Totterdown, Bristol BS4 2EB, Royaume-Uni', 556.07, NULL, NULL, 51.441091, -2.576330, NULL, 'Garden', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(6, 'Busty Park', 'Bushy Park, Totterdown, Bristol BS4 2EG, Royaume-Uni', 930.89, NULL, '0000-00-00', 51.441555, -2.578356, NULL, 'Park', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(7, 'St.John\'s lane', 'Totterdown, Bristol BS4 2EG, Royaume-Uni', 4299.02, NULL, NULL, 51.440920, -2.580070, NULL, 'Other', 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png'),
-(8, 'Local Green Space ', '17 Oxford St, Totterdown, Bristol BS3 4RQ, Royaume-Uni', 3194.29, 'Local GreenSpace with a Bus Station ', NULL, 51.443203, -2.578593, NULL, 'Other', NULL),
-(9, 'Higham Street Garden', 'Higham St, Bristol BS4 2BJ, Royaume-Uni', 3206.93, NULL, NULL, 51.444748, -2.579049, NULL, 'Garden', NULL),
-(10, 'Local GreenSpace of St.Lukes Road', 'Wycliffe Row, Bristol BS3 4RZ, Royaume-Uni', 1793.18, NULL, NULL, 51.442227, -2.583418, NULL, 'Other', NULL);
+(1, 'Higham Street Green', 'Higham St, Bristol BS4 2BJ', 3207, 'Fenceposted green area with trees, grasses and flowers', NULL, 51.444748, -2.579049, NULL, 'Park', NULL),
+(2, 'Wells Road Embankment', 'Bellevue Road Bus Stop, Wells Road, Totterdown, Bristol BS3 4RQ', 3194, 'Trees, Flowers and Grasses on Wells Road', NULL, 51.44309873076185, -2.5786215972701387, NULL, 'Park', NULL),
+(3, 'The Three Signs Lamps Signpost', '6 Higham St, Totterdown, Bristol BS4 2BJ', 316, 'Small area of grasses and shrubs on the intersection of Wells and Bath Road', NULL, 51.4441209286486, -2.578338132975402, NULL, 'Grass', NULL),
+(4, 'Zone A', 'Wells Rd, Totterdown, Bristol BS4 3AL', 1090, 'Dedicated community green area', NULL, 51.4414372039459, -2.576150642288253, NULL, 'Park', NULL),
+(5, 'Angers Road Park', 'Totterdown, Bristol BS4 3AG', 3293, 'Park located on County Street, Kingstree Street and Angers Road', NULL, 51.442563079645936, -2.5759799650810056, NULL, 'Park', NULL),
+(6, 'School Road Park', 'School Rd, Totterdown, Bristol BS4 3DJ', 3458, 'Park located on School Road', NULL, 51.44032633442105, -2.5728892256551728, NULL, 'Park', NULL),
+(7, 'Park Street Community Space', '63-51 Park St, Totterdown, Bristol', 5615, 'Community Space located on a steep hillside', NULL, 51.44183123363889, -2.57249226838304, NULL, 'Community Space', NULL),
+(8, 'Wycliffe Row Embankment', 'Wycliffe Row, Bristol BS3 4RZ', 3595, 'Embankment with trees and grasses between Wycliffe Row and St Lukes Road', NULL, 51.442359349729436, -2.583488170490007, NULL, 'Embankment', NULL),
+(9, 'Oxford Street Car Park', 'Oxford St, Totterdown, Bristol BS3 4RJ', 1450, 'Hedges and Trees surrounding and within the Oxford Street Car Park', NULL, 51.44172911534412, -2.5789820784308404, NULL, 'Hedges', NULL),
+(10, 'St Johns Lane Embankment', 'Totterdown, Bristol BS4 2EG', 3597, 'Grass and Trees with pathsways just off St Johns Lane', NULL, 51.44101239148049, -2.57966945614291, NULL, 'Embankment', NULL),
+(11, 'Bushy Park', 'Bushy Park, Totterdown, Bristol BS4 2EG', 1092, 'Bushy Park', NULL, 51.44154892795166, -2.5782951673008636, NULL, 'Park', NULL),
+(12, 'St Johns Lane and Wells Road Intersection', '33 Oxford St, Totterdown, Bristol BS3 4RJ', 228, 'Small area of grass next to pedestrian pathway for the intersection', NULL, 51.441850073694866, -2.578304978163266, NULL, 'Grass', NULL),
+(13, 'Oxford Street Embankment', 'Oxford St, Totterdown, Bristol', 2992, 'Embankment with grasses and trees inbetween Oxford Street and St Johns Lane', NULL, 51.44112257258446, -2.580225077920557, NULL, 'Embankment', NULL),
+(14, 'Winton Street Car Park', 'Winton St, Totterdown, Bristol BS4 2BT', 556, 'Hedges and Trees surround car park on Winton Street', NULL, 51.44110587333831, -2.5762745348363336, NULL, 'Hedges', NULL);
 
 -- --------------------------------------------------------
 
@@ -123,7 +127,7 @@ CREATE TABLE `wildlife` (
 --
 
 INSERT INTO `wildlife` (`ID`, `Name`, `Category`, `Wildlife_lat`, `Wildlife_long`, `IconPath`, `GreenspaceID`) VALUES
-(1, 'Dog', 'Animals', 51.442552, -2.576018, 'https://cdn4.iconfinder.com/data/icons/zoo-17/60/zoo__location__navigation__wild__map-512.png', 1);
+(1, 'Dog', 'Animals', 51.442552, -2.576018, '', 1);
 
 --
 -- Index pour les tables déchargées
