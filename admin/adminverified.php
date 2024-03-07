@@ -18,9 +18,8 @@ if(isset($_POST['delete_post'])) {
 }
 
 
-
 // Query to fetch validated posts with user information
-$stmt_validated_posts = $pdo->prepare("SELECT pp.post_id, pp.post_resident_name, pp.post_resident_email, pp.post_desc, pp.post_dimens, pp.post_image, pp.post_anon, pp.validated, GROUP_CONCAT(c.category_name SEPARATOR ', ') AS categories FROM privatespace_post pp LEFT JOIN category_has_post chp ON pp.post_id = chp.FK_post_id LEFT JOIN category c ON chp.FK_category_id = c.category_id WHERE validated = 1;");
+$stmt_validated_posts = $pdo->prepare("SELECT pp.post_id, pp.post_resident_name, pp.post_resident_email, pp.post_lat, pp.post_long, pp.post_desc, pp.post_dimens, pp.post_image, pp.post_anon, GROUP_CONCAT(c.category_name SEPARATOR ', ') AS categories FROM privatespace_post pp LEFT JOIN category_has_post chp ON pp.post_id = chp.FK_post_id LEFT JOIN category c ON chp.FK_category_id = c.category_id WHERE pp.validated = 1 GROUP BY pp.post_id, pp.post_resident_name, pp.post_lat, pp.post_long, pp.post_desc, pp.post_dimens, pp.post_image, pp.post_anon;");
 $stmt_validated_posts->execute();
 $validated_posts = $stmt_validated_posts->fetchAll(PDO::FETCH_ASSOC);
 

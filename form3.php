@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+include 'dbcon2.php';
 
     $tresacords = json_encode($tresaCoords)
 ?>

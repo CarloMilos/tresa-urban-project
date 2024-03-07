@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include 'dbcon.php';
+include 'dbcon2.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -22,9 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $description = $_POST['garden-description'];
         $dimensions = $_POST['dimensions'];
         $anonymous = isset($_POST['anon']) ? 1 : 0;
+        $validated = 0;
 
         // Insert post information into the post table
-        $stmt_post = $pdo->prepare("INSERT INTO privatespace_post (post_resident_name, post_resident_email, post_lat, post_long, post_desc, post_dimens, post_image, post_anon) VALUES (:post_name, :post_email, :lat, :long, :descr, :dimensions, :image_path, :anon)");
+        $stmt_post = $pdo->prepare("INSERT INTO privatespace_post (post_resident_name, post_resident_email, post_lat, post_long, post_desc, post_dimens, post_image, post_anon, validated) VALUES (:post_name, :post_email, :lat, :long, :descr, :dimensions, :image_path, :anon, :validated)");
         $stmt_post->bindParam(':post_name', $name);
         $stmt_post->bindParam(':post_email', $email);
         $stmt_post->bindParam(':lat', $latitude);
@@ -33,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_post->bindParam(':dimensions', $dimensions);
         $stmt_post->bindParam(':image_path', $image_path);
         $stmt_post->bindParam(':anon', $anonymous);
+        $stmt_post->bindParam(':validated', $validated);
+
         $stmt_post->execute();
 
         $post_id = $pdo->lastInsertId();
