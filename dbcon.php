@@ -1,7 +1,7 @@
 <?php
 // Database connection parameters
 $host = 'localhost'; // Your MySQL host (usually 'localhost')
-$dbname = 'tresa_db'; // Your database name
+$dbname = 'newtresadb'; // Your database name
 $username = 'root'; // Your database username
 $password = ''; // Your database password
 

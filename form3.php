@@ -96,7 +96,7 @@ require 'config.php';
 
         <div>
             <label for="uname">Name:</label>
-            <input type="text" id="Uname" name="uname" required>
+            <input type="text" id="uname" name="uname" required>
         </div>
         <div>
             <label for="email">Email:</label>
@@ -143,15 +143,10 @@ require 'config.php';
                 <input type="checkbox" id="insects" name="categories[]" value="insects">
             </div>
         </div>
-
-        <div id="land-type-dropdown">
-        <label for="land-type">Is the nature reserve on private or public land?</label>
-        <select name="land-type" required>
-            <option value="" disabled selected>Please Select</option>
-            <option value="private">Private</option>
-            <option value="public">Public</option>
-        </select>
-    </div>
+        <div>
+            <label for="image-upload">Image Upload:</label>
+            <input type="file" id="image-upload" name="image-upload" accept="image/*" required>
+        </div>
         <div>
         <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
         <input type="checkbox" id="terms" name="terms" required>
