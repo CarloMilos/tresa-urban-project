@@ -115,21 +115,21 @@
             // Set polygon i on the map
             polygons[i].setMap(map);
 
-            // Add click event listener to the polygon, so that when clicked, an infoWindow opens
-            /*google.maps.event.addListener(polygons[i], 'click', function(event) {
-                var size = google.maps.geometry.spherical.computeArea(polygons[i].getPath());
-                var contentString = 'You clicked on the polygon' + i + ' at ' + event.latLng + '<br>Area: ' + size + ' m<sup>2</sup>';
-                infoWindow.setContent(contentString);
-                infoWindow.setPosition(event.latLng);
-                infoWindow.open(map);
-
-            });*/
         }
+
         // Add markers to the map
         for (var i = 0; i < markersData.length; i++) {
             addMarker(markersData[i]);
         }
 
+    }
+
+    function highlightArea(i){
+        polygons[i].setOptions({fillColor: '#ff0000'});
+    }
+
+    function unhighlightArea(i){
+        polygons[i].setOptions({fillColor: '#4ff77c'});
     }
  
     function addMarker(markerInfo) {
@@ -228,36 +228,44 @@
 
                 <div class="tab-content p-2" id="greenspacesTabsContent" style="max-height: 800px; overflow: auto;">
                     <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
-                        
-                        <?php
-                            echo '<table class="table-responsive">';
-                            echo '<thead>';
-                            echo '<tr>';
-                            echo '<th>Name</th>';
-                            echo '<th>Type</th>';
-                            echo '<th>Size (m²)</th>';
-                            echo '<th>Description</th>';
-                            echo '<th>Image</th>';
-                            echo '</tr>';
-                            echo '</thead>';
-                            echo '<tbody>';
-                            foreach($pdo->query('SELECT * FROM public_greenspaces') as $tresa_db){
-                                echo '<tr>';
-                                echo '<td>'.$tresa_db['Name'].'</td>';
-                                echo '<td>'.$tresa_db['Type'].'</td>';
-                                echo '<td>'.$tresa_db['Size'].'</td>';
-                                echo '<td>'.$tresa_db['Description'].'</td>';
-                                if (!empty($tresa_db['Image'])) {
-                                    echo '<td><img src="' . $tresa_db['Image'] . '" alt="Image" style="max-width: 200px"></td>';
-                                } else {
-                                    echo '<td>No image available</td>';
-                                }
-                                echo '</tr>';
-                            }
-                            echo '</tbody>';
-                            echo '</table>';
-                        ?>
-                        
+                        <table class="table-responsive" id="publicTable">'
+                            <thead>
+                                <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Size (m²)</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php
+                                    
+                                    $query = $pdo->query('SELECT * FROM public_greenspaces');
+                                    $results = $query->fetchAll();
+
+                                    for ($i = 0; $i < count($results); $i++) {
+                                        $tresa_db = $results[$i];
+
+                                        echo '<tr onmouseover="highlightArea('.$i.')" onmouseout="unhighlightArea('. $i .')">';
+                                        echo '<td>' . $tresa_db['Name'] . '</td>';
+                                        echo '<td>' . $tresa_db['Type'] . '</td>';
+                                        echo '<td>' . $tresa_db['Size'] . '</td>';
+                                        echo '<td>' . $tresa_db['Description'] . '</td>';
+                                        
+                                        if (!empty($tresa_db['Image'])) {
+                                            echo '<td><img src="' . $tresa_db['Image'] . '" alt="Image" style="max-width: 200px"></td>';
+                                        } else {
+                                            echo '<td>No image available</td>';
+                                        }
+
+                                        echo '</tr>';
+                                    }
+
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab" style="max-height: 800px; overflow: auto;">
@@ -293,6 +301,7 @@
                             }
                         ?>
                     </div>
+
                 </div>
                              
             </div>
@@ -300,26 +309,6 @@
         </div>
 
     </div>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
