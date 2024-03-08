@@ -1,7 +1,24 @@
 <?php
 
 //Google Maps API Key
-$api_key = "AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg";
+$api_key = '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>';
+
+// Database connection parameters
+$host = 'localhost'; // Your MySQL host (usually 'localhost')
+$dbname = 'newtresadb'; // Your database name
+$username = 'root'; // Your database username
+$password = ''; // Your database password
+
+try {
+    // Create a new PDO instance
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+
+    // Set the PDO error mode to exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    // If connection fails, display error message
+    echo "Connection failed: " . $e->getMessage();
+}
 
 $tresaCoords = [
         ['lng' => -2.5818852, 'lat' => 51.4440896],

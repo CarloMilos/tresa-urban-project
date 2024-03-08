@@ -2,8 +2,6 @@
     // Include the config file
     require 'config.php';
 
-    require 'dbcon2.php'; // This file should contain your database connection code
-
     // Get TRESA area coordinates from the config file and turn into JSON array
     $tresaCoords = json_encode($tresaCoords);
 
@@ -29,11 +27,22 @@
         );
     }
 
+    $totalPublicArea = 0;
+    // Loop through $publicmarkers array, grab the dimens and add to $totalPublicArea
+    if(is_array($publicmarkers) || is_object($publicmarkers)){
+
+        foreach($publicmarkers as $publicmarker){
+            $totalPublicArea += $publicmarker['dimens'];
+        }
+    }
+
     // Encode the markers array into JSON
     $publicmarkers = json_encode($publicmarkers);
 
-    $privateMarkerData = array(); // Array to store marker data
+    // Array to store marker data
+    $privateMarkerData = array();
 
+    // Fetch locations from the Private_Greenspaces table
     $sql2 = "SELECT 
     pp.post_resident_name,
     pp.post_lat,
@@ -68,21 +77,44 @@
         );
     }
 
-        // Encode the markers array into JSON
-        $privateMarkerData = json_encode($privateMarkerData);
+    $totalPrivateArea = 0;
+    // Loop through $privateMarkerData array, grab the dimens and add to $totalPrivateArea
+    if(is_array($privateMarkerData) || is_object($privateMarkerData)){
+
+        foreach($privateMarkerData as $privateMarker){
+            $totalPrivateArea += $privateMarker['dimensions'];
+        }
+    }
+
+    $tresaSize = 357000; // TRESA area size in square metres
+    $remainingArea = $tresaSize - $totalPublicArea - $totalPrivateArea; // Calculate the remaining area
+
+    // Encode the markers array into JSON
+    $privateMarkerData = json_encode($privateMarkerData);
+
     ?>
 
 <!DOCTYPE html>
 <html>
     <title>Place and Remove Public Green Space Marker</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
+    <?php echo $api_key; ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script>
+    
+    // Initialise variables
+
+    // Map variable
     var map;
+    // Array for public green spaces polygons
     var polygons = [];
+    // Array for public green space markers
     var publicMarkers = [];
-    var publicMarkerData = <?php echo $publicmarkers; ?>; // Retrieve marker data from PHP
+    // Array for public green space marker data
+    var publicMarkerData = <?php echo $publicmarkers; ?>;
+    // Array for private green space marker data
     var privateMarkerData = <?php echo $privateMarkerData; ?>;
+    // Array for private green space markers
     var privateMarkers = [];
     // Initialise coordinates from config file as JS variables
     var tresaCoords = <?php echo $tresaCoords; ?>;
@@ -91,6 +123,7 @@
     // Create infoWindow variable so that only one infoWindow is open at a time
     var infoWindow = new google.maps.InfoWindow();
     
+    // Marker icon
     var green = 'https://icons8.com/icon/20873/organic-food';
 
     // Initialise TRESA area map
@@ -100,10 +133,6 @@
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 51.44148754688007, lng: -2.576942891944935},
             zoom: 16
-        });
-
-        google.maps.event.addListener(map, 'click', function(event) {
-            placeMarker(event.latLng);
         });
 
         // Draw TRESA area on the map
@@ -118,8 +147,7 @@
         // Set TRESA area on the map
         tresaArea.setMap(map);
 
-
-        // Loops through the areas array and draws the polygons on the map
+        // Loops through the areas array and draws the polygons (public spaces) on the map
         for(let i = 0; i<Object.keys(areas).length; i++){
 
             //Draws polygon i on the map
@@ -148,22 +176,27 @@
         }
     }
 
+    // Highlights area
     function highlightArea(i){
         polygons[i].setOptions({fillColor: '#ff0000'});
     }
 
+    // Unhighlights area
     function unhighlightArea(i){
         polygons[i].setOptions({fillColor: '#4ff77c'});
     }
 
+    // Function to open infoWindow on public markers
     function clickArea(i){
         google.maps.event.trigger(publicMarkers[i], 'click');
     }
 
+    // Function to open infoWindow on private markers
     function clickPrivateMarker(i){
         google.maps.event.trigger(privateMarkers[i], 'click');
     }
  
+    // Function to add a marker to the map
     function addMarker(markerInfo) {
         var marker;
         
@@ -194,6 +227,7 @@
         return marker;
     }
 
+    // Function to add a private marker to the map
     function addprivateMarkerData(markerInfo) {
         var marker;
 
@@ -220,13 +254,14 @@
         return marker;
     }
 
-
 </script>
 <style>
+
     body{
         cursor: default;
     }
 
+    /* Set table hover colour */
     tr:hover {background-color: #df988b;}
 </style>
 </head>
@@ -256,7 +291,10 @@
                         <a class="nav-link" id="private-tab" data-bs-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false">User Submitted Green Spaces</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="form-tab" data-bs-toggle="tab" href="#form" role="tab" aria-controls="private" aria-selected="false">Submission Form</a>
+                        <a class="nav-link" id="analytics-tab" data-bs-toggle="tab" href="#analytics" role="tab" aria-controls="private" aria-selected="false">Analytics</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="form3.php" role="tab">Submission Form</a>
                     </li>
                 </ul>
 
@@ -264,7 +302,7 @@
 
                 <div class="tab-content p-2" id="greenspacesTabsContent" style="max-height: 800px; overflow: auto;">
                     <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
-                        <table class="table-responsive" id="publicTable">'
+                        <table class="table-responsive" id="publicTable">
                             <thead>
                                 <tr style="pointer-events: none">
                                     <th>Name</th>
@@ -305,7 +343,7 @@
                     <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab" style="max-height: 800px; overflow: auto;">
                         <table class="table-responsive">
                             <thead>
-                                <tr style="pointer-events: none">;
+                                <tr style="pointer-events: none">
                                     <th>ID</th>
                                     <th>Description</th>
                                     <th>Size (m²)</th>
@@ -334,7 +372,58 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab" style="max-height: 800px;">
+                    <div class="tab-pane fade" id="analytics" role="tabpanel" aria-labelledby="analytics-tab" style="max-height: 800px; overflow: auto;" onload="createChart()">
+                        
+                    <div>
+                        <canvas id="pie-chart" style="width:100%;"></canvas>
+                    </div>
+
+                    <?php
+                        
+                    ?>
+
+                    <script>
+                    const xValues = ["Public Areas", "User Submissions", "Remaining Totterdown Area"];
+                    const yValues = [<?php echo $totalPublicArea ?>, <?php echo $totalPrivateArea ?>, <?php echo $remainingArea ?>];
+                    const barColors = [
+                    "#66d15f",
+                    "#0d6efd",
+                    "#818282"
+                    ];
+
+                    var ctx = document.getElementById("pie-chart").getContext("2d");
+                    new Chart(ctx, {
+                    type: "pie",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                        }]
+                    },
+                    options: {
+                        title: {
+                        display: true,
+                        text: "Totterdown Urban Nature Reserve Area Distribution"
+                        },
+                        tooltips: {
+                            callbacks: {
+                            label: function(tooltipItem, data) {
+                                var dataset = data.datasets[tooltipItem.datasetIndex];
+                                var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                                var total = meta.total;
+                                var currentValue = dataset.data[tooltipItem.index];
+                                var percentage = parseFloat((currentValue/total*100).toFixed(1));
+                                return currentValue + ' (' + percentage + '%)';
+                            },
+                            title: function(tooltipItem, data) {
+                                return data.labels[tooltipItem[0].index];
+                            }
+                            }
+                        },
+                    }
+                    });
+                    </script>
                         
                     </div>
 
@@ -345,6 +434,7 @@
         </div>
 
     </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

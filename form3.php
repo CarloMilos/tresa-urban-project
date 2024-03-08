@@ -1,6 +1,5 @@
 <?php
 require 'config.php';
-include 'dbcon2.php';
 
     $tresacords = json_encode($tresaCoords)
 ?>
@@ -16,12 +15,12 @@ include 'dbcon2.php';
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
     <script>
-        var map;
+        var formMap;
         var marker;
         var bristolLine;
 
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
+        function initFormMap() {
+            formMap = new google.maps.Map(document.getElementById('formMap'), {
                 center: {lat: 51.4421635, lng: -2.5773008},
                 zoom: 15
             });
@@ -39,10 +38,10 @@ include 'dbcon2.php';
             });
 
             // Set line on the map
-            bristolLine.setMap(map);
+            bristolLine.setMap(formMap);
 
             // Listen for clicks on the map to drop a marker
-                        google.maps.event.addListener(map, 'click', function(event) {
+                        google.maps.event.addListener(formMap, 'click', function(event) {
                 if (google.maps.geometry.poly.containsLocation(event.latLng, bristolLine)) {
                     placeMarker(event.latLng);
                 } else {
@@ -57,7 +56,7 @@ include 'dbcon2.php';
             }
             marker = new google.maps.Marker({
                 position: location,
-                map: map
+                map: formMap
             });
 
             // Update hidden inputs with marker data
@@ -87,7 +86,7 @@ include 'dbcon2.php';
 </script>
 
 </head>
-<body onload="initMap()">
+<body onload="initFormMap()">
 <div class="form_container">
     <div class="title">
         <h1> TRESA Urban Nature Reserve Input Form <h1>
@@ -104,7 +103,7 @@ include 'dbcon2.php';
             <input type="email" id="email" name="email" required>
         </div>
         <label for="mapinputs">Please place a Marker on the location of your Nature Reserve</label>
-        <div id="map" style="height: 350px; width: 100%;"></div>
+            <div id="formMap" style="height: 350px; width: 100%;"></div>
         <input type="hidden" id="latitude" name="latitude">
         <input type="hidden" id="longitude" name="longitude">
         <div>
@@ -146,7 +145,7 @@ include 'dbcon2.php';
         </div>
         <div>
             <label for="image-upload">Image Upload:</label>
-            <input type="file" id="image-upload" name="image-upload" accept="image/*" required>
+            <input type="file" id="image-upload" name="image-upload" accept="image/*">
         </div>
         <div>
         <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
