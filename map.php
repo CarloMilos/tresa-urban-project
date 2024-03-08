@@ -2,7 +2,7 @@
     // Include the config file
     require 'config.php';
 
-    require 'dbcon.php'; // This file should contain your database connection code
+    require 'dbcon2.php'; // This file should contain your database connection code
 
     // Get TRESA area coordinates from the config file and turn into JSON array
     $tresaCoords = json_encode($tresaCoords);
@@ -10,49 +10,67 @@
     // Get public green space areas coordinates from the config file and turn into JSON array
     $areas = json_encode($areas);
 
-    $markers = array(); // Array to store all markers data
+    $publicmarkers = array(); // Array to store all markers data
     
     // Fetch locations from the Public_Greenspaces table
-    $sql = "SELECT * FROM Public_Greenspaces";
+    $sql = "SELECT * FROM publicspace_post";
     $stmt = $pdo->query($sql);
 
     // Fetching data row by row for public greenspaces
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         // Add each row as a marker to the markers array
-        $markers[] = array(
-            'ID' => $row['ID'],
-            'Name' => $row['Name'],
-            'lat' => $row['Lat'],
-            'lng' => $row['Long'],
-            'desc' => $row['Description'],
-            'location' => $row['Location'],
-            'type' => $row['Type'], // Assuming 'Type' represents the category of the green space
-            'size' => $row['Size'],
-            'icon' => $row['IconPath'], // Include IconPath for public greenspaces
-            'category' => 'greenspace' // Additional field to distinguish between public greenspaces and wildlife markers
-        );
-    }
-
-    // Fetch locations from the wildlife table
-    $sql = "SELECT * FROM wildlife";
-    $stmt = $pdo->query($sql);
-
-    // Fetching data row by row for wildlife
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // Add each row as a marker to the markers array
-        $markers[] = array(
-            'ID' => $row['ID'],
-            'Name' => $row['Name'],
-            'Category' => $row['Category'],
-            'lat' => $row['Wildlife_lat'], // Updated column name
-            'lng' => $row['Wildlife_long'], // Updated column name
-            'icon' => $row['IconPath'],
+        $publicmarkers[] = array(
+            'Name' => $row['post_area_name'],
+            'lat' => $row['post_lat'],
+            'lng' => $row['post_long'],
+            'desc' => $row['post_desc'],
+            'dimens' => $row['post_dimens'],
+            'image' => $row['post_image'],
         );
     }
 
     // Encode the markers array into JSON
-    $markers = json_encode($markers);
-?>
+    $publicmarkers = json_encode($publicmarkers);
+
+    $privateMarkerData = array(); // Array to store marker data
+
+    $sql2 = "SELECT 
+    pp.post_resident_name,
+    pp.post_lat,
+    pp.post_long,
+    pp.post_desc,
+    pp.post_dimens,
+    pp.post_image,
+    pp.post_anon,
+    GROUP_CONCAT(c.category_name SEPARATOR ', ') AS categories
+    FROM 
+        privatespace_post pp
+    LEFT JOIN 
+        category_has_post chp ON pp.post_id = chp.FK_post_id
+    LEFT JOIN 
+        category c ON chp.FK_category_id = c.category_id
+    GROUP BY 
+        pp.post_id;
+    ;";
+
+    $stmt2 = $pdo->query($sql2);
+
+    // Fetching data row by row
+    while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        // Add each row as a marker to the markers array
+        $privateMarkerData[] = array(
+            'name' => $row['post_resident_name'],
+            'lat' => $row['post_lat'],
+            'lng' => $row['post_long'],
+            'desc'=> $row['post_desc'],
+            'dimensions' => $row['post_dimens'],
+            'categories' => $row['categories'],
+        );
+    }
+
+        // Encode the markers array into JSON
+        $privateMarkerData = json_encode($privateMarkerData);
+    ?>
 
 <!DOCTYPE html>
 <html>
@@ -62,8 +80,10 @@
     <script>
     var map;
     var polygons = [];
-    var markersData = <?php echo $markers; ?>; // Retrieve marker data from PHP
-
+    var publicMarkers = [];
+    var publicMarkerData = <?php echo $publicmarkers; ?>; // Retrieve marker data from PHP
+    var privateMarkerData = <?php echo $privateMarkerData; ?>;
+    var privateMarkers = [];
     // Initialise coordinates from config file as JS variables
     var tresaCoords = <?php echo $tresaCoords; ?>;
     var areas = <?php echo $areas; ?>;
@@ -79,7 +99,7 @@
         // Create a new map, center is co-ords in the middle of the TRESA area
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 51.44148754688007, lng: -2.576942891944935},
-            zoom: 15
+            zoom: 16
         });
 
         google.maps.event.addListener(map, 'click', function(event) {
@@ -118,10 +138,14 @@
         }
 
         // Add markers to the map
-        for (var i = 0; i < markersData.length; i++) {
-            addMarker(markersData[i]);
+        for (var i = 0; i < publicMarkerData.length; i++) {
+            addMarker(publicMarkerData[i]); // Corrected function call
         }
 
+            // Add private markers to the map
+        for (var i = 0; i < privateMarkerData.length; i++) {
+            addprivateMarkerData(privateMarkerData[i]);
+        }
     }
 
     function highlightArea(i){
@@ -131,39 +155,18 @@
     function unhighlightArea(i){
         polygons[i].setOptions({fillColor: '#4ff77c'});
     }
+
+    function clickArea(i){
+        google.maps.event.trigger(publicMarkers[i], 'click');
+    }
+
+    function clickPrivateMarker(i){
+        google.maps.event.trigger(privateMarkers[i], 'click');
+    }
  
     function addMarker(markerInfo) {
         var marker;
         
-
-
-        // Check if the marker is a wildlife marker
-        if (markerInfo.Category === 'wildlife') {
-            var wildlifeIcon = {
-                url: markerInfo.icon,
-                scaledSize: new google.maps.Size(32, 32),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(16, 16)
-            };
-
-            // Create a wildlife marker
-            marker = new google.maps.Marker({
-                position: { lat: parseFloat(markerInfo.greenspaceLat), lng:     parseFloat(markerInfo.greenspaceLng) },
-                map: map,
-                icon: 'https://cdn4.iconfinder.com/data/icons/zoo-17/60/zoo__location__navigation__wild__map-512.png' // URL of your wildlife marker icon
-            });
-
-            // Add click event listener to the wildlife marker
-            marker.addListener('click', function() {
-                var contentString = '<div>' +
-                    '<p>ID: ' + markerInfo.ID + '</p>' +
-                    '<p>Name: ' + markerInfo.Name + '</p>' +
-                    '</div>';
-                infoWindow.setContent(contentString);
-                infoWindow.open(map, marker);
-            });
-            } else {
-            // Create a regular marker
                 marker = new google.maps.Marker({
                     position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
                     map: map,
@@ -173,29 +176,59 @@
                     }
             });
 
+            publicMarkers.push(marker);
+
             // Add click event listener to the regular marker
             marker.addListener('click', function() {
                 var contentString = '<div>' +
-                    '<p>ID: ' + markerInfo.ID + '</p>' +
-                    '<p>lat: ' + markerInfo.lat + '</p>' +
-                    '<p>long: ' + markerInfo.lng + '</p>' +
                     '<p>Name: ' + markerInfo.Name + '</p>' +
-                    '<p>Location: ' + markerInfo.location + '</p>' +
-                    '<p>Size: ' + markerInfo.size + '</p>' +
-                    '<p>Type: ' + markerInfo.type + '</p>' +
+                    '<p>Description: ' + markerInfo.desc + '</p>' +
+                    '<p>Size: ' + markerInfo.dimens + ' m²</p>' +
                     '</div>';
                 infoWindow.setContent(contentString);
                 infoWindow.open(map, marker);
+                infoWindow.focus();
             });
-        }
 
         // Add the marker to the map
         return marker;
     }
-   
+
+    function addprivateMarkerData(markerInfo) {
+        var marker;
+
+        marker = new google.maps.Marker({
+            position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
+            map: map
+        });
+
+        privateMarkers.push(marker);
+
+        // Add click event listener to the private marker
+        marker.addListener('click', function() {
+            var contentString = '<div>' +
+                '<p>Name: ' + markerInfo.name + '</p>' +
+                '<p>Description: ' + markerInfo.desc + '</p>' +
+                '<p>Size: ' + markerInfo.dimensions + ' m²</p>' +
+                '</div>';
+            infoWindow.setContent(contentString);
+            infoWindow.open(map, marker);
+            infoWindow.focus();
+        });
+
+        // Add the private marker to the map
+        return marker;
+    }
+
 
 </script>
+<style>
+    body{
+        cursor: default;
+    }
 
+    tr:hover {background-color: #df988b;}
+</style>
 </head>
 <body onload="initMap()">
 
@@ -222,6 +255,9 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="private-tab" data-bs-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false">User Submitted Green Spaces</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="form-tab" data-bs-toggle="tab" href="#form" role="tab" aria-controls="private" aria-selected="false">Submission Form</a>
+                    </li>
                 </ul>
 
                 
@@ -230,29 +266,27 @@
                     <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
                         <table class="table-responsive" id="publicTable">'
                             <thead>
-                                <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Size (m²)</th>
-                                <th>Description</th>
-                                <th>Image</th>
+                                <tr style="pointer-events: none">
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Size (m²)</th>
+                                    <th>Image</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 <?php
                                     
-                                    $query = $pdo->query('SELECT * FROM public_greenspaces');
+                                    $query = $pdo->query('SELECT * FROM publicspace_post');
                                     $results = $query->fetchAll();
 
                                     for ($i = 0; $i < count($results); $i++) {
                                         $tresa_db = $results[$i];
 
-                                        echo '<tr onmouseover="highlightArea('.$i.')" onmouseout="unhighlightArea('. $i .')">';
-                                        echo '<td>' . $tresa_db['Name'] . '</td>';
-                                        echo '<td>' . $tresa_db['Type'] . '</td>';
-                                        echo '<td>' . $tresa_db['Size'] . '</td>';
-                                        echo '<td>' . $tresa_db['Description'] . '</td>';
+                                        echo '<tr onmouseover="highlightArea('.$i.')" onmouseout="unhighlightArea('. $i .')"  onclick="clickArea('.$i.')">';
+                                        echo '<td>' . $tresa_db['post_area_name'] . '</td>';
+                                        echo '<td>' . $tresa_db['post_desc'] . '</td>';
+                                        echo '<td>' . $tresa_db['post_dimens'] . '</td>';
                                         
                                         if (!empty($tresa_db['Image'])) {
                                             echo '<td><img src="' . $tresa_db['Image'] . '" alt="Image" style="max-width: 200px"></td>';
@@ -269,37 +303,39 @@
                     </div>
 
                     <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab" style="max-height: 800px; overflow: auto;">
-                        <?php
-                            // Code to fetch and display data from the private_greenspaces table
-                            foreach($pdo->query('SELECT * FROM private_greenspaces') as $private_greenspace){
-                                echo '<table class="table-responsive">';
-                                echo '<tr>';
-                                echo '<th>ID</th>';
-                                echo '<th>Name</th>';
-                                echo '<th>Type</th>';
-                                echo '<th>Location</th>';
-                                echo '<th>Size</th>';
-                                echo '<th>Description</th>';
-                                echo '<th>DateEstablished</th>';
-                                echo '<th>Lat</th>';
-                                echo '<th>Long</th>';
-                                echo '<th>Image</th>';
-                                echo '</tr>';
-                                echo '<tr>';
-                                echo '<td>'.$private_greenspace['ID'].'</td>';
-                                echo '<td>'.$private_greenspace['Name'].'</td>';
-                                echo '<td>'.$private_greenspace['Type'].'</td>';
-                                echo '<td>'.$private_greenspace['Location'].'</td>';
-                                echo '<td>'.$private_greenspace['Size'].'</td>';
-                                echo '<td>'.$private_greenspace['Description'].'</td>';
-                                echo '<td>'.$private_greenspace['DateEstablished'].'</td>';
-                                echo '<td>'.$private_greenspace['Lat'].'</td>';
-                                echo '<td>'.$private_greenspace['Long'].'</td>';
-                                echo '<td><img src="'.$private_greenspace['Image'].'" alt="Image"></td>';
-                                echo '</tr>';
-                                echo '</table>';
-                            }
-                        ?>
+                        <table class="table-responsive">
+                            <thead>
+                                <tr style="pointer-events: none">;
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Size (m²)</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                        
+                            <tbody>
+
+                                <?php
+                                    $queryPrivate = $pdo->query('SELECT * FROM privatespace_post');
+                                    $resultsPrivate = $queryPrivate->fetchAll();
+                                    
+                                    for ($i = 0; $i < count($resultsPrivate); $i++) {
+                                        $private_greenspace = $resultsPrivate[$i];
+                                    
+                                        echo '<tr onclick="clickPrivateMarker('.$i.')">';
+                                        echo '<td>' . $private_greenspace['post_id'] . '</td>';
+                                        echo '<td>' . $private_greenspace['post_desc'] . '</td>';
+                                        echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
+                                        echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
+                                        echo '</tr>';
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab" style="max-height: 800px;">
+                        
                     </div>
 
                 </div>
