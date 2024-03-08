@@ -51,6 +51,7 @@
     pp.post_dimens,
     pp.post_image,
     pp.post_anon,
+    pp.validated,
     GROUP_CONCAT(c.category_name SEPARATOR ', ') AS categories
     FROM 
         privatespace_post pp
@@ -58,6 +59,7 @@
         category_has_post chp ON pp.post_id = chp.FK_post_id
     LEFT JOIN 
         category c ON chp.FK_category_id = c.category_id
+    WHERE validated = 1
     GROUP BY 
         pp.post_id;
     ;";
