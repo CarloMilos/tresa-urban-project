@@ -13,6 +13,74 @@ require 'config.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.form_container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin: 50px auto;
+    max-width: 600px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title h1 {
+    color: #073b38;
+    font-weight: 600;
+}
+
+.title h3 {
+    color: #333;
+    font-weight: 400;
+}
+
+label {
+    color: #333;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border don't affect the width */
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+button[type="submit"] {
+    background-color: #073b38;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0d6efd;
+}
+    </style>
+     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
     <script>
         var formMap;
