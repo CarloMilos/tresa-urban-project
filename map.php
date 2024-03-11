@@ -307,10 +307,10 @@
                         <table class="table-responsive" id="publicTable">
                             <thead>
                                 <tr style="pointer-events: none">
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Size (m²)</th>
-                                    <th>Image</th>
+                                    <th> Name </th>
+                                    <th> Description </th>
+                                    <th> Size (m²) </th>
+                                    <th> Image</th>
                                 </tr>
                             </thead>
 
@@ -346,30 +346,33 @@
                         <table class="table-responsive">
                             <thead>
                                 <tr style="pointer-events: none">
-                                    <th>ID</th>
-                                    <th>Description</th>
-                                    <th>Size (m²)</th>
-                                    <th>Image</th>
+                                    <th> ID </th>
+                                    <th> Name </th>
+                                    <th> Description </th>
+                                    <th> Size (m²) </th>
+                                    <th> Image </th>
                                 </tr>
                             </thead>
                         
                             <tbody>
 
-                                <?php
-                                    $queryPrivate = $pdo->query('SELECT * FROM privatespace_post');
-                                    $resultsPrivate = $queryPrivate->fetchAll();
-                                    
-                                    for ($i = 0; $i < count($resultsPrivate); $i++) {
-                                        $private_greenspace = $resultsPrivate[$i];
-                                    
-                                        echo '<tr onclick="clickPrivateMarker('.$i.')">';
-                                        echo '<td>' . $private_greenspace['post_id'] . '</td>';
-                                        echo '<td>' . $private_greenspace['post_desc'] . '</td>';
-                                        echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
-                                        echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
-                                        echo '</tr>';
-                                    }
-                                ?>
+                            <?php
+                                $queryPrivate = $pdo->query('SELECT * FROM privatespace_post WHERE validated = 1');
+                                $resultsPrivate = $queryPrivate->fetchAll();
+                                
+                                for ($i = 0; $i < count($resultsPrivate); $i++) {
+                                    $private_greenspace = $resultsPrivate[$i];
+                                
+                                    echo '<tr onclick="clickPrivateMarker('.$i.')">';
+                                    echo '<td>' . $private_greenspace['post_id'] . '</td>';
+                                    echo '<td>' . $private_greenspace['post_resident_name'] . '</td>';
+                                    echo '<td>' . $private_greenspace['post_desc'] . '</td>';
+                                    echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
+                                    echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
+                                    echo '</tr>';
+                                }
+                            ?>
+
                             </tbody>
                         </table>
                     </div>
