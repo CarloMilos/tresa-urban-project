@@ -346,12 +346,13 @@
                     </div>
 
                     <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab" style="max-height: 800px; overflow: auto;">
-                        <table class="table-responsive">
+                        <table class="table-responsive" id="publicTable">
                             <thead>
                                 <tr style="pointer-events: none">
                                     <th>ID</th>
                                     <th>Description</th>
                                     <th>Size (m²)</th>
+                                    <th>Categories(s)</th>
                                     <th>Image</th>
                                 </tr>
                             </thead>
@@ -359,7 +360,7 @@
                             <tbody>
 
                                 <?php
-                                    $queryPrivate = $pdo->query('SELECT * FROM privatespace_post');
+                                    /*$queryPrivate = $pdo->query('SELECT * FROM privatespace_post');
                                     $resultsPrivate = $queryPrivate->fetchAll();
                                     
                                     for ($i = 0; $i < count($resultsPrivate); $i++) {
@@ -371,7 +372,28 @@
                                         echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
                                         echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
                                         echo '</tr>';
+                                    }*/
+
+                                    $sql = "SELECT pp.*, c.category_name
+                                    FROM privatespace_post pp
+                                    INNER JOIN category_has_post chp ON pp.post_id = chp.FK_post_id
+                                    INNER JOIN category c ON chp.FK_category_id = c.category_id";
+
+                                    $resultsPrivate = $pdo->query($sql);
+
+                                    foreach ($resultsPrivate as $private_greenspace) {
+                                        echo '<tr onclick="clickPrivateMarker('.$private_greenspace['post_id'].')">';
+                                        echo '<td>' . $private_greenspace['post_id'] . '</td>';
+                                        echo '<td>' . $private_greenspace['post_desc'] . '</td>';
+                                        echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
+                                        echo '<td>' . $private_greenspace['category_name'] . '</td>';
+                                        echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
+                                        echo '</tr>';
                                     }
+                                    
+                                    
+
+
                                 ?>
                             </tbody>
                         </table>
@@ -388,46 +410,46 @@
                     ?>
 
                     <script>
-                    const xValues = ["Public Areas", "User Submissions", "Remaining Totterdown Area"];
-                    const yValues = [<?php echo $totalPublicArea ?>, <?php echo $totalPrivateArea ?>, <?php echo $remainingArea ?>];
-                    const barColors = [
-                    "#66d15f",
-                    "#0d6efd",
-                    "#818282"
-                    ];
+                        const xValues = ["Public Areas", "User Submissions", "Remaining Totterdown Area"];
+                        const yValues = [<?php echo $totalPublicArea ?>, <?php echo $totalPrivateArea ?>, <?php echo $remainingArea ?>];
+                        const barColors = [
+                            "#66d15f",
+                            "#0d6efd",
+                            "#818282"
+                        ];
 
-                    var ctx = document.getElementById("pie-chart").getContext("2d");
-                    new Chart(ctx, {
-                    type: "pie",
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                        backgroundColor: barColors,
-                        data: yValues
-                        }]
-                    },
-                    options: {
-                        title: {
-                        display: true,
-                        text: "Totterdown Urban Nature Reserve Area Distribution"
-                        },
-                        tooltips: {
-                            callbacks: {
-                            label: function(tooltipItem, data) {
-                                var dataset = data.datasets[tooltipItem.datasetIndex];
-                                var meta = dataset._meta[Object.keys(dataset._meta)[0]];
-                                var total = meta.total;
-                                var currentValue = dataset.data[tooltipItem.index];
-                                var percentage = parseFloat((currentValue/total*100).toFixed(1));
-                                return currentValue + ' (' + percentage + '%)';
+                        var ctx = document.getElementById("pie-chart").getContext("2d");
+                        new Chart(ctx, {
+                            type: "pie",
+                            data: {
+                                labels: xValues,
+                                datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                                }]
                             },
-                            title: function(tooltipItem, data) {
-                                return data.labels[tooltipItem[0].index];
+                            options: {
+                                title: {
+                                display: true,
+                                text: "Totterdown Urban Nature Reserve Area Distribution"
+                                },
+                                tooltips: {
+                                    callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                                        var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                                        var total = meta.total;
+                                        var currentValue = dataset.data[tooltipItem.index];
+                                        var percentage = parseFloat((currentValue/total*100).toFixed(1));
+                                        return currentValue + 'm² (' + percentage + '%)';
+                                    },
+                                    title: function(tooltipItem, data) {
+                                        return data.labels[tooltipItem[0].index];
+                                    }
+                                    }
+                                },
                             }
-                            }
-                        },
-                    }
-                    });
+                        });
                     </script>
                         
                     </div>

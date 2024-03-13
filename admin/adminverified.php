@@ -25,6 +25,9 @@ $validated_posts = $stmt_validated_posts->fetchAll(PDO::FETCH_ASSOC);
 
 // Display validated posts with user information
 echo "<h2>Validated Posts with User Information</h2>";
+echo "<div style=\"padding: 1rem\">";
+echo '<button onclick="location.href=\'admin.php\'">Go back</button>';
+echo "</div>";
 echo "<table border='1'>";
 echo "<tr>
     <th>Post ID</th>

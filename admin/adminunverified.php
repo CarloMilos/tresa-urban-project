@@ -18,7 +18,7 @@ if(isset($_POST['delete_post'])) {
     $stmt_delete_category->execute([$post_id]);
     
     // Delete from post table
-    $stmt_delete_post = $pdo->prepare("DELETE FROM post WHERE post_id = ?");
+    $stmt_delete_post = $pdo->prepare("DELETE FROM privatespace_post WHERE post_id = ?");
     $stmt_delete_post->execute([$post_id]);
     
 }
@@ -98,4 +98,5 @@ if (!empty($recent_posts)) {
     echo "</table>";
 } else {
     echo "<p>Hey, looks like you don't have any rows to validate!</p>";
+    echo '<button onclick="location.href=\'admin.php\'">Go back</button>';
 }

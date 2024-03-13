@@ -16,69 +16,82 @@ require 'config.php';
     <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
     <style>
         body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
 
-.form_container {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin: 50px auto;
-    max-width: 600px;
-}
+        .form_container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 50px auto;
+            max-width: 600px;
+        }
 
-.title {
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 10px 0;
+            justify-content: space-between;
+        }
 
-.title h1 {
-    color: #073b38;
-    font-weight: 600;
-}
+        .categoriesContainer {
+            border: 2px solid #cccccc;
+            border-radius: 5px;
+            padding: 1rem
+        }
 
-.title h3 {
-    color: #333;
-    font-weight: 400;
-}
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-label {
-    color: #333;
-    font-weight: 600;
-}
+        .title h1 {
+            color: #073b38;
+            font-weight: 600;
+        }
 
-input[type="text"],
-input[type="email"],
-textarea,
-input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; /* Ensure padding and border don't affect the width */
-}
+        .title h3 {
+            color: #333;
+            font-weight: 400;
+        }
 
-input[type="checkbox"] {
-    margin-right: 5px;
-}
+        label {
+            color: #333;
+            font-weight: 600;
+        }
 
-button[type="submit"] {
-    background-color: #073b38;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensure padding and border don't affect the width */
+        }
 
-button[type="submit"]:hover {
-    background-color: #0d6efd;
-}
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #28acdc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0d6efd;
+        }
     </style>
      
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
@@ -182,42 +195,83 @@ button[type="submit"]:hover {
             <textarea id="garden-description" name="garden-description" rows="4" cols="50" required></textarea>
         </div>
         <div>
-            <label for="dimensions">Dimensions:</label>
+            <label for="dimensions">Dimensions (m²):</label>
             <input type="number" id="dimensions" name="dimensions" required>
-            <span>m<sup>2</sup></span>
         </div>
-        <div>
-            <label for="categories">Categories:</label><br>
+
+        <div class="categoriesContainer">
+            <div>
+                <label for="categories">Categories:</label><br>
+            </div>
+
+            <div id="categoriesDropdown" class="categories">
+                <div class="flora">
+                    <div class="checkbox-wrapper">
+                        <label for="trees">Trees</label>
+                        <input type="checkbox" id="trees" name="categories[]" value="trees">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="flowers">Flowers</label>
+                        <input type="checkbox" id="flowers" name="categories[]" value="flowers">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="hedges">Hedges</label>
+                        <input type="checkbox" id="hedges" name="categories[]" value="hedges">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="grasses">Grasses</label>
+                        <input type="checkbox" id="grasses" name="categories[]" value="grasses">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="ponds">Ponds</label>
+                        <input type="checkbox" id="ponds" name="categories[]" value="ponds">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="other_flora">Other Flora</label>
+                        <input type="checkbox" id="other_flora" name="categories[]" value="other_flora">
+                    </div>
+                </div>
+
+                <div class="fauna">
+                    <div class="checkbox-wrapper">
+                        <label for="birds">Birds</label>
+                        <input type="checkbox" id="birds" name="categories[]" value="birds">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="insects">Insects</label>
+                        <input type="checkbox" id="insects" name="categories[]" value="insects">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="butterflies">Butterflies</label>
+                        <input type="checkbox" id="butterflies" name="categories[]" value="butterflies">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="bees">Bees</label>
+                        <input type="checkbox" id="bees" name="categories[]" value="bees">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="mammals">Mammals</label>
+                        <input type="checkbox" id="mammals" name="categories[]" value="mammals">
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <label for="other_fauna">Other Fauna</label>
+                        <input type="checkbox" id="other_fauna" name="categories[]" value="other_fauna">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; padding-top: 1rem">
+                <div>If selecting other please explain within description</div>
+            </div>
+
         </div>
-        <div id="categoriesDropdown">
-            <div class="checkbox-wrapper">
-                <label for="trees">Trees</label>
-                <input type="checkbox" id="trees" name="categories[]" value="trees">
-            </div>
-            <div class="checkbox-wrapper">
-                <label for="flowers">Flowers</label>
-                <input type="checkbox" id="flowers" name="categories[]" value="flowers">
-            </div>
-            <div class="checkbox-wrapper">
-                <label for="hedges">Hedges</label>
-                <input type="checkbox" id="hedges" name="categories[]" value="hedges">
-            </div>
-            <div class="checkbox-wrapper">
-                <label for="birds">Birds</label>
-                <input type="checkbox" id="birds" name="categories[]" value="birds">
-            </div>
-            <div class="checkbox-wrapper">
-                <label for="insects">Insects</label>
-                <input type="checkbox" id="insects" name="categories[]" value="insects">
-            </div>
-        </div>
-        <div>
+        <div style="padding-top: 1rem">
             <label for="image-upload">Image Upload:</label>
             <input type="file" id="image-upload" name="image-upload" accept="image/*">
         </div>
-        <div>
-        <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
-        <input type="checkbox" id="terms" name="terms" required>
+        <div style="padding-top: 1rem">
+            <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
+            <input type="checkbox" id="terms" name="terms" required>
         </div>
         <div>
             <h4 class="anontype">If you would like to opt out of having your data added to the map, tick the box below!</h4>
@@ -226,7 +280,7 @@ button[type="submit"]:hover {
             </label>
         </div>
 
-        <div>
+        <div style="padding-top: 1rem">
             <button type="submit">Submit</button>
         </div>
     </form>
