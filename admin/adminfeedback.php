@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include 'dbcon.php';
+require '../config.php';
 
 // Check if the delete button is clicked
 if(isset($_POST['delete_post'])) {
@@ -68,44 +68,6 @@ foreach ($feedback_data as $feedback) {
 echo "</table>";
 
 
-// Query to fetch validated posts with user information
-$stmt_validated_posts = $pdo->prepare("SELECT pp.post_id, pp.post_resident_name, pp.post_resident_email, pp.post_lat, pp.post_long, pp.post_desc, pp.post_dimens, pp.post_image, pp.post_anon, GROUP_CONCAT(c.category_name SEPARATOR ', ') AS categories FROM privatespace_post pp LEFT JOIN category_has_post chp ON pp.post_id = chp.FK_post_id LEFT JOIN category c ON chp.FK_category_id = c.category_id WHERE pp.validated = 1 GROUP BY pp.post_id, pp.post_resident_name, pp.post_lat, pp.post_long, pp.post_desc, pp.post_dimens, pp.post_image, pp.post_anon;");
-$stmt_validated_posts->execute();
-$validated_posts = $stmt_validated_posts->fetchAll(PDO::FETCH_ASSOC);
-
-// Display validated posts with user information
-echo "<h2>Validated Posts with User Information</h2>";
-echo "<table border='1'>";
-echo "<tr>
-    <th>Post ID</th>
-    <th>User Name</th>
-    <th>User Email</th>
-    <th>Description</th>
-    <th>Dimensions m²</th>
-    <th> Image </th>
-    <th>Anonymous Post?</th>
-    <th>Categories</th>
-    <th>Delete</th>
-    </tr>";
-foreach ($validated_posts as $post) {
-    echo "<tr>";
-    echo "<td>".$post['post_id']."</td>";
-    echo "<td>".$post['post_resident_name']."</td>";
-    echo "<td>".$post['post_resident_email']."</td>";
-    echo "<td>".$post['post_desc']."</td>";
-    echo "<td>".$post['post_dimens']." m² </td>";
-    echo "<td><img src='../".$post['post_image']."' alt='Post Image' style='width: 100px; height: auto;'></td>";
-    echo "<td>".($post['post_anon'] == 1 ? "Yes" : "No")."</td>";
-    echo "<td>".$post['categories']."</td>";
-    echo "<td>";
-    echo "<form method='post' onsubmit='return confirmDelete(\"post\");'>";
-    echo "<input type='hidden' name='post_id' value='".$post['post_id']."'>";
-    echo "<input type='submit' name='delete_post' value='Delete' class='delete-button'>";
-    echo "</form>";
-    echo "</td>"; 
-    echo "</tr>";
-}
-echo "</table>";
 ?>
 <!DOCTYPE html>
 <html lang="en">

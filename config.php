@@ -5,7 +5,7 @@ $api_key = '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9H
 
 // Database connection parameters
 $host = 'localhost'; // Your MySQL host (usually 'localhost')
-$dbname = 'newtresadb'; // Your database name
+$dbname = 'tresadb'; // Your database name
 $username = 'root'; // Your database username
 $password = ''; // Your database password
 
