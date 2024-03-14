@@ -277,8 +277,9 @@
         cursor: default;
     }
 
-    /* Set table hover colour */
-    tr:hover {background-color: #df988b;}
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #df988b;
+    }
 </style>
 </head>
 <body onload="initMap()">
@@ -319,18 +320,17 @@
                 </ul>
                 
                 <!-- Tab content -->
-                <div class="tab-content p-2" id="greenspacesTabsContent" style="max-height: 800px; overflow: auto;">
+                <div class="tab-content" id="greenspacesTabsContent" style="max-height: 800px;">
 
                     <!-- Public green spaces -->
                     <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
-                        <table class="table-responsive" id="publicTable">
+                        <table class="table table-bordered table-hover" id="publicTable">
                             <!-- Table header -->
                             <thead>
                                 <tr style="pointer-events: none">
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Size (m²)</th>
-                                    <th>Image</th>
                                 </tr>
                             </thead>
 
@@ -352,11 +352,11 @@
                                         echo '<td>' . $tresa_db['post_desc'] . '</td>';
                                         echo '<td>' . $tresa_db['post_dimens'] . '</td>';
                                         
-                                        if (!empty($tresa_db['Image'])) {
+                                        /*if (!empty($tresa_db['Image'])) {
                                             echo '<td><img src="' . $tresa_db['Image'] . '" alt="Image" style="max-width: 200px"></td>';
                                         } else {
                                             echo '<td>No image available</td>';
-                                        }
+                                        }*/
 
                                         echo '</tr>';
                                     }
@@ -367,8 +367,8 @@
                     </div>
 
                     <!-- Private green spaces -->
-                    <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab" style="max-height: 800px; overflow: auto;">
-                        <table class="table-responsive" id="publicTable">
+                    <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
+                        <table class="table table-bordered table-hover" id="publicTable">
                             <!-- Table header -->
                             <thead>
                                 <tr style="pointer-events: none">
@@ -409,21 +409,33 @@
                                         pp.post_id";
 
                                     // Execute the query and fetch the results
-                                    $resultsPrivate = $pdo->query($sql);
+                                    $query = $pdo->query($sql);
+                                    $resultsPrivate = $query->fetchAll();
 
                                     // Loop through the results and display them in the table
-                                    foreach ($resultsPrivate as $private_greenspace) {
+                                    /*foreach ($resultsPrivate as $private_greenspace) {
                                         echo '<tr onclick="clickPrivateMarker('.$private_greenspace['post_id'].')">';
                                         echo '<td>' . $private_greenspace['post_id'] . '</td>';
                                         echo '<td>' . $private_greenspace['post_resident_name'] . '</td>';
                                         echo '<td>' . $private_greenspace['post_desc'] . '</td>';
                                         echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
-                                        echo '<td>' . $private_greenspace['categories'] . '</td>';
+                                        echo '<td>' . str_replace("_", " ", $private_greenspace['categories']) . '</td>';
                                         echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
                                         echo '</tr>';
+                                    }*/
+                                    
+                                    for ($i = 0; $i < count($resultsPrivate); $i++) {
+                                        $tresa_db = $resultsPrivate[$i];
+
+                                        echo '<tr onclick="clickPrivateMarker('.$i.')">';
+                                        echo '<td>' . $tresa_db['post_id'] . '</td>';
+                                        echo '<td>' . $tresa_db['post_resident_name'] . '</td>';
+                                        echo '<td>' . $tresa_db['post_desc'] . '</td>';
+                                        echo '<td>' . $tresa_db['post_dimens'] . '</td>';
+                                        echo '<td>' . str_replace("_", " ", $tresa_db['categories']) . '</td>';
+                                        echo '<td><img src="' . $tresa_db['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
+                                        echo '</tr>';
                                     }
-                                    
-                                    
 
 
                                 ?>

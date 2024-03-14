@@ -69,6 +69,7 @@ $recent_posts = $stmt_recent_posts->fetchAll(PDO::FETCH_ASSOC);
 if (!empty($recent_posts)) {
     echo "<div style='width: 80% ; margin: 0 auto'>";
     echo "<h2>Recent Posts with User Information</h2>";
+    echo '<button onclick="location.href=\'admin.php\'" class="btn btn-primary mb-3">Go back</button>';
     echo "<div class='table-responsive';>";
     echo "<table class='table table-bordered'>";
     echo "<thead class='thead-dark'>
