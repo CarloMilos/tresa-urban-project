@@ -62,8 +62,7 @@
         category c ON chp.FK_category_id = c.category_id
     WHERE validated = 1
     GROUP BY 
-        pp.post_id;
-    ;";
+        pp.post_id;";
 
     // Execute the query
     $stmt2 = $pdo->query($sql2);
@@ -371,6 +370,7 @@
                             <thead>
                                 <tr style="pointer-events: none">
                                     <th>ID</th>
+                                    <th> Name </th>
                                     <th>Description</th>
                                     <th>Size (m²)</th>
                                     <th>Categories(s)</th>
@@ -384,10 +384,26 @@
                                 <?php
 
                                     // SQL query to select all private green spaces, and the category/s they belong to
-                                    $sql = "SELECT pp.*, c.category_name
-                                    FROM privatespace_post pp
-                                    INNER JOIN category_has_post chp ON pp.post_id = chp.FK_post_id
-                                    INNER JOIN category c ON chp.FK_category_id = c.category_id";
+                                    $sql = "SELECT 
+                                    pp.post_id,
+                                    pp.post_resident_name,
+                                    pp.post_lat,
+                                    pp.post_long,
+                                    pp.post_desc,
+                                    pp.post_dimens,
+                                    pp.post_image,
+                                    pp.post_anon,
+                                    pp.validated,
+                                    GROUP_CONCAT(c.category_name SEPARATOR ', ') AS categories
+                                    FROM 
+                                        privatespace_post pp
+                                    LEFT JOIN 
+                                        category_has_post chp ON pp.post_id = chp.FK_post_id
+                                    LEFT JOIN 
+                                        category c ON chp.FK_category_id = c.category_id
+                                    WHERE validated = 1 
+                                    GROUP BY 
+                                        pp.post_id";
 
                                     // Execute the query and fetch the results
                                     $resultsPrivate = $pdo->query($sql);
@@ -396,9 +412,10 @@
                                     foreach ($resultsPrivate as $private_greenspace) {
                                         echo '<tr onclick="clickPrivateMarker('.$private_greenspace['post_id'].')">';
                                         echo '<td>' . $private_greenspace['post_id'] . '</td>';
+                                        echo '<td>' . $private_greenspace['post_resident_name'] . '</td>';
                                         echo '<td>' . $private_greenspace['post_desc'] . '</td>';
                                         echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
-                                        echo '<td>' . $private_greenspace['category_name'] . '</td>';
+                                        echo '<td>' . $private_greenspace['categories'] . '</td>';
                                         echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
                                         echo '</tr>';
                                     }

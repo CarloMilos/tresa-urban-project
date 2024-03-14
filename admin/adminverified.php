@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verified Posts</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
 <?php
 // Include database connection
 include 'dbcon.php';
@@ -24,46 +34,57 @@ $stmt_validated_posts->execute();
 $validated_posts = $stmt_validated_posts->fetchAll(PDO::FETCH_ASSOC);
 
 // Display validated posts with user information
-echo "<h2>Validated Posts with User Information</h2>";
-echo "<div style=\"padding: 1rem\">";
-echo '<button onclick="location.href=\'admin.php\'">Go back</button>';
-echo "</div>";
-echo "<table border='1'>";
-echo "<tr>
-    <th>Post ID</th>
-    <th>User Name</th>
-    <th>User Email</th>
-    <th>Description</th>
-    <th>Dimensions m²</th>
-    <th> Image </th>
-    <th>Anonymous Post?</th>
-    <th>Categories</th>
-    <th>Delete</th>
-    </tr>";
-foreach ($validated_posts as $post) {
-    echo "<tr>";
-    echo "<td>".$post['post_id']."</td>";
-    echo "<td>".$post['post_resident_name']."</td>";
-    echo "<td>".$post['post_resident_email']."</td>";
-    echo "<td>".$post['post_desc']."</td>";
-    echo "<td>".$post['post_dimens']." m² </td>";
-    echo "<td><img src='../".$post['post_image']."' alt='Post Image' style='width: 100px; height: auto;'></td>";
-    echo "<td>".($post['post_anon'] == 1 ? "Yes" : "No")."</td>";
-    echo "<td>".$post['categories']."</td>";
-    echo "<td>";
-    echo "<form method='post' onsubmit='return confirmDelete();'>";
-    echo "<input type='hidden' name='post_id' value='".$post['post_id']."'>";
-    echo "<input type='submit' name='delete_post' value='Delete'>";
-    echo "</form>";
-    echo "</td>"; 
-    echo "</tr>";
-}
-echo "</table>";
 ?>
+<body>
+<div class="container">
+  <h2>Validated Posts with User Information</h2>
+  <div class="row">
+    <div class="col-12">
+      <button onclick="location.href='admin.php'" class="btn btn-primary mb-3">Go back</button>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>Post ID</th>
+          <th>User Name</th>
+          <th>User Email</th>
+          <th>Description</th>
+          <th>Dimensions m²</th>
+          <th>Image</th>
+          <th>Anonymous Post?</th>
+          <th>Categories</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($validated_posts as $post): ?>
+          <tr>
+            <td><?= $post['post_id'] ?></td>
+            <td><?= $post['post_resident_name'] ?></td>
+            <td><?= $post['post_resident_email'] ?></td>
+            <td><?= $post['post_desc'] ?></td>
+            <td><?= $post['post_dimens'] ?> m²</td>
+            <td><img src="../<?= $post['post_image'] ?>" alt="Post Image" style="max-width: 100px; height: auto;"></td>
+            <td><?= $post['post_anon'] == 1 ? "Yes" : "No" ?></td>
+            <td><?= $post['categories'] ?></td>
+            <td>
+              <form method="post" onsubmit="return confirmDelete();">
+                <input type="hidden" name="post_id" value="<?= $post['post_id'] ?>">
+                <input type="submit" name="delete_post" value="Delete" class="btn btn-danger">
+              </form>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
 <script>
 function confirmDelete() {
     return confirm("Are you sure you want to delete this post?\nThis will remove the marker from the map");
 }
 </script>
-
-
+</html>
