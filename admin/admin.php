@@ -49,6 +49,21 @@
             margin: 0 10px;
         }
 
+        .dashboard-button3 {
+            background-color: #42a1f5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            outline: none;
+            margin: 0 10px;
+        }
+
 
         .dashboard-button:hover {
             background-color: #e64141;
@@ -60,6 +75,7 @@
     <div class="button-container">
         <button class="dashboard-button2" onclick="location.href='adminverified.php'">Verified Posts</button>
         <button class="dashboard-button1" onclick="location.href='adminunverified.php'">Unverified Posts</button>
+        <button class="dashboard-button3" onclick="location.href='adminfeedback.php'">Feedback</button>
     </div>
 </body>
 </html>
