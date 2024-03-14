@@ -1,17 +1,5 @@
 <?php
-// Database connection details
-$servername = "localhost"; // Change this to your database server name
-$username = "root"; // Change this to your database username
-$password = ""; // Change this to your database password
-$dbname = "newtresadb"; 
-
-// Create connection
-$pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-
-// Check connection
-if (!$pdo) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require 'config.php';
 // Set cache-control header
 header("Cache-Control: max-age=604800"); // Set max-age to a valid value
 

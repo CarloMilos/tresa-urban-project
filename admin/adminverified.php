@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include 'dbcon.php';
+require '../config.php';
 
 // Check if the delete button is clicked
 if(isset($_POST['delete_post'])) {
