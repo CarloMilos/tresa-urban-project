@@ -60,7 +60,7 @@
         category_has_post chp ON pp.post_id = chp.FK_post_id
     LEFT JOIN 
         category c ON chp.FK_category_id = c.category_id
-    WHERE validated = 1
+    WHERE validated = 1 AND post_anon = 0
     GROUP BY 
         pp.post_id;";
 
