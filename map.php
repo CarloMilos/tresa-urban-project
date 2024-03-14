@@ -312,7 +312,10 @@
                         <a class="nav-link" id="analytics-tab" data-bs-toggle="tab" href="#analytics" role="tab" aria-controls="private" aria-selected="false">Analytics</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="form3.php" role="tab">Submission Form</a>
+                        <a class="nav-link" href="form.php" role="tab">Submission Form</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" href="feedback.php" role="tab">Feedback</a>
                     </li>
                 </ul>
                 
