@@ -42,13 +42,17 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (3, 'Hedges'),
 (4, 'Grasses'),
 (5, 'Ponds'),
-(6, 'Other_flora'),
+(6, 'Other_space_for_nature'),
 (7, 'Birds'),
 (8, 'Insects'),
 (9, 'Butterflies'),
 (10, 'Bees'),
-(11, 'Mammals'),
-(12, 'Other_fauna');
+(11, 'Frogs'),
+(12, 'Newts'),
+(13, 'Bats'),
+(14, 'Foxes'),
+(15, 'Hedgehogs'),
+(16, 'Other_fauna');
 
 
 -- --------------------------------------------------------

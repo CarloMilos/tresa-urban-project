@@ -27,6 +27,7 @@
         );
     }
 
+    // Initialise variable to store total public area
     $totalPublicArea = 0;
     // Loop through $publicmarkers array, grab the dimens and add to $totalPublicArea
     if(is_array($publicmarkers) || is_object($publicmarkers)){
@@ -64,6 +65,7 @@
         pp.post_id;
     ;";
 
+    // Execute the query
     $stmt2 = $pdo->query($sql2);
 
     // Fetching data row by row
@@ -79,6 +81,7 @@
         );
     }
 
+    // Initialise variable to store total private area
     $totalPrivateArea = 0;
     // Loop through $privateMarkerData array, grab the dimens and add to $totalPrivateArea
     if(is_array($privateMarkerData) || is_object($privateMarkerData)){
@@ -88,8 +91,11 @@
         }
     }
 
-    $tresaSize = 357000; // TRESA area size in square metres
-    $remainingArea = $tresaSize - $totalPublicArea - $totalPrivateArea; // Calculate the remaining area
+    // TRESA area size in square metres
+    $tresaSize = 357000;
+
+    // Calculate the remaining area
+    $remainingArea = $tresaSize - $totalPublicArea - $totalPrivateArea;
 
     // Encode the markers array into JSON
     $privateMarkerData = json_encode($privateMarkerData);
@@ -98,7 +104,7 @@
 
 <!DOCTYPE html>
 <html>
-    <title>Place and Remove Public Green Space Marker</title>
+    <title>Place and Remove Public Green Space Marker</title>#
     <?php echo $api_key; ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
@@ -203,30 +209,33 @@
  
     // Function to add a marker to the map
     function addMarker(markerInfo) {
+        // Initialise marker variable
         var marker;
         
-                marker = new google.maps.Marker({
-                    position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
-                    map: map,
-                    icon: {
-                        url: 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png', // URL of your marker image
-                        scaledSize: new google.maps.Size(32, 32) // Adjust the size as needed
-                    }
-            });
+        // Create a new marker
+        marker = new google.maps.Marker({
+            position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
+            map: map,
+            icon: {
+                url: 'https://cdn-icons-png.flaticon.com/512/1183/1183384.png', // URL of your marker image
+                scaledSize: new google.maps.Size(32, 32) // Adjust the size as needed
+            }
+        });
 
-            publicMarkers.push(marker);
+        // Add the marker to the publicMarkers array
+        publicMarkers.push(marker);
 
-            // Add click event listener to the regular marker
-            marker.addListener('click', function() {
-                var contentString = '<div>' +
-                    '<p>Name: ' + markerInfo.Name + '</p>' +
-                    '<p>Description: ' + markerInfo.desc + '</p>' +
-                    '<p>Size: ' + markerInfo.dimens + ' m²</p>' +
-                    '</div>';
-                infoWindow.setContent(contentString);
-                infoWindow.open(map, marker);
-                infoWindow.focus();
-            });
+        // Add click event listener to the regular marker
+        marker.addListener('click', function() {
+            var contentString = '<div>' +
+                '<p>Name: ' + markerInfo.Name + '</p>' +
+                '<p>Description: ' + markerInfo.desc + '</p>' +
+                '<p>Size: ' + markerInfo.dimens + ' m²</p>' +
+                '</div>';
+            infoWindow.setContent(contentString);
+            infoWindow.open(map, marker);
+            infoWindow.focus();
+        });
 
         // Add the marker to the map
         return marker;
@@ -234,13 +243,16 @@
 
     // Function to add a private marker to the map
     function addprivateMarkerData(markerInfo) {
+        // Initialise marker variable
         var marker;
 
+        // Create a new marker
         marker = new google.maps.Marker({
             position: { lat: parseFloat(markerInfo.lat), lng: parseFloat(markerInfo.lng) },
             map: map
         });
 
+        // Add the marker to the privateMarkers array
         privateMarkers.push(marker);
 
         // Add click event listener to the private marker
@@ -272,11 +284,12 @@
 </head>
 <body onload="initMap()">
 
-
+    <!-- Container for the map and the list of public and private green spaces -->
     <div class="container-fluid">
 
         <div class="row">
 
+            <!-- Map -->
             <div class="col w-50 p-3 m-3 border border-dark rounded justify-content-center">
             
                 <h3>Totterdown Urban Nature Reserve</h3>
@@ -284,10 +297,10 @@
 
             </div>
 
+            <!-- List of public and private green spaces -->
             <div class="col w-50 p-3 m-3 border border-dark rounded">
 
-                
-                
+                <!-- Tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="public-tab" data-bs-toggle="tab" href="#public" role="tab" aria-controls="public" aria-selected="true">Public Green Spaces</a>
@@ -302,12 +315,14 @@
                         <a class="nav-link" href="form3.php" role="tab">Submission Form</a>
                     </li>
                 </ul>
-
                 
-
+                <!-- Tab content -->
                 <div class="tab-content p-2" id="greenspacesTabsContent" style="max-height: 800px; overflow: auto;">
+
+                    <!-- Public green spaces -->
                     <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
                         <table class="table-responsive" id="publicTable">
+                            <!-- Table header -->
                             <thead>
                                 <tr style="pointer-events: none">
                                     <th>Name</th>
@@ -317,12 +332,16 @@
                                 </tr>
                             </thead>
 
+                            <!-- Table body -->
                             <tbody>
                                 <?php
                                     
+                                    // Connect to the database
                                     $query = $pdo->query('SELECT * FROM publicspace_post');
+                                    // Fetch the results
                                     $results = $query->fetchAll();
 
+                                    // Loop through the results and display them in the table
                                     for ($i = 0; $i < count($results); $i++) {
                                         $tresa_db = $results[$i];
 
@@ -345,8 +364,10 @@
                         </table>
                     </div>
 
+                    <!-- Private green spaces -->
                     <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab" style="max-height: 800px; overflow: auto;">
                         <table class="table-responsive" id="publicTable">
+                            <!-- Table header -->
                             <thead>
                                 <tr style="pointer-events: none">
                                     <th>ID</th>
@@ -356,31 +377,22 @@
                                     <th>Image</th>
                                 </tr>
                             </thead>
-                        
+                                    
+                            <!-- Table body -->
                             <tbody>
 
                                 <?php
-                                    /*$queryPrivate = $pdo->query('SELECT * FROM privatespace_post');
-                                    $resultsPrivate = $queryPrivate->fetchAll();
-                                    
-                                    for ($i = 0; $i < count($resultsPrivate); $i++) {
-                                        $private_greenspace = $resultsPrivate[$i];
-                                    
-                                        echo '<tr onclick="clickPrivateMarker('.$i.')">';
-                                        echo '<td>' . $private_greenspace['post_id'] . '</td>';
-                                        echo '<td>' . $private_greenspace['post_desc'] . '</td>';
-                                        echo '<td>' . $private_greenspace['post_dimens'] . '</td>';
-                                        echo '<td><img src="' . $private_greenspace['post_image'] . '" alt="Image" style="max-width: 200px"></td>';
-                                        echo '</tr>';
-                                    }*/
 
+                                    // SQL query to select all private green spaces, and the category/s they belong to
                                     $sql = "SELECT pp.*, c.category_name
                                     FROM privatespace_post pp
                                     INNER JOIN category_has_post chp ON pp.post_id = chp.FK_post_id
                                     INNER JOIN category c ON chp.FK_category_id = c.category_id";
 
+                                    // Execute the query and fetch the results
                                     $resultsPrivate = $pdo->query($sql);
 
+                                    // Loop through the results and display them in the table
                                     foreach ($resultsPrivate as $private_greenspace) {
                                         echo '<tr onclick="clickPrivateMarker('.$private_greenspace['post_id'].')">';
                                         echo '<td>' . $private_greenspace['post_id'] . '</td>';
@@ -399,58 +411,59 @@
                         </table>
                     </div>
 
+                    <!-- Analytics -->
                     <div class="tab-pane fade" id="analytics" role="tabpanel" aria-labelledby="analytics-tab" style="max-height: 800px; overflow: auto;" onload="createChart()">
-                        
+                    
+                    <!-- Chartholder -->
                     <div>
                         <canvas id="pie-chart" style="width:100%;"></canvas>
                     </div>
 
-                    <?php
-                        
-                    ?>
+                        <script>
+                            // Gather chart data
+                            const xValues = ["Public Areas", "User Submissions", "Remaining Totterdown Area"];
+                            const yValues = [<?php echo $totalPublicArea ?>, <?php echo $totalPrivateArea ?>, <?php echo $remainingArea ?>];
+                            // Chart colors
+                            const barColors = [
+                                "#66d15f",
+                                "#0d6efd",
+                                "#818282"
+                            ];
 
-                    <script>
-                        const xValues = ["Public Areas", "User Submissions", "Remaining Totterdown Area"];
-                        const yValues = [<?php echo $totalPublicArea ?>, <?php echo $totalPrivateArea ?>, <?php echo $remainingArea ?>];
-                        const barColors = [
-                            "#66d15f",
-                            "#0d6efd",
-                            "#818282"
-                        ];
-
-                        var ctx = document.getElementById("pie-chart").getContext("2d");
-                        new Chart(ctx, {
-                            type: "pie",
-                            data: {
-                                labels: xValues,
-                                datasets: [{
-                                backgroundColor: barColors,
-                                data: yValues
-                                }]
-                            },
-                            options: {
-                                title: {
-                                display: true,
-                                text: "Totterdown Urban Nature Reserve Area Distribution"
+                            // Create chart
+                            var ctx = document.getElementById("pie-chart").getContext("2d");
+                            new Chart(ctx, {
+                                type: "pie",
+                                data: {
+                                    labels: xValues,
+                                    datasets: [{
+                                    backgroundColor: barColors,
+                                    data: yValues
+                                    }]
                                 },
-                                tooltips: {
-                                    callbacks: {
-                                    label: function(tooltipItem, data) {
-                                        var dataset = data.datasets[tooltipItem.datasetIndex];
-                                        var meta = dataset._meta[Object.keys(dataset._meta)[0]];
-                                        var total = meta.total;
-                                        var currentValue = dataset.data[tooltipItem.index];
-                                        var percentage = parseFloat((currentValue/total*100).toFixed(1));
-                                        return currentValue + 'm² (' + percentage + '%)';
+                                options: {
+                                    title: {
+                                    display: true,
+                                    text: "Totterdown Urban Nature Reserve Area Distribution"
                                     },
-                                    title: function(tooltipItem, data) {
-                                        return data.labels[tooltipItem[0].index];
-                                    }
-                                    }
-                                },
-                            }
-                        });
-                    </script>
+                                    tooltips: {
+                                        callbacks: {
+                                        label: function(tooltipItem, data) {
+                                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                                            var total = meta.total;
+                                            var currentValue = dataset.data[tooltipItem.index];
+                                            var percentage = parseFloat((currentValue/total*100).toFixed(1));
+                                            return currentValue + 'm² (' + percentage + '%)';
+                                        },
+                                        title: function(tooltipItem, data) {
+                                            return data.labels[tooltipItem[0].index];
+                                        }
+                                        }
+                                    },
+                                }
+                            });
+                        </script>
                         
                     </div>
 

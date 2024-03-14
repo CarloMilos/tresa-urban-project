@@ -1,6 +1,8 @@
 <?php
-require 'config.php';
+    // Include the config file
+    require 'config.php';
 
+    // Grab TRESA coordinates from the database, encode into JSON
     $tresacords = json_encode($tresaCoords)
 ?>
 <!DOCTYPE html>
@@ -96,11 +98,13 @@ require 'config.php';
      
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>
     <script>
+        // Define the map and line variables
         var formMap;
         var marker;
         var bristolLine;
 
         function initFormMap() {
+            // Create the map
             formMap = new google.maps.Map(document.getElementById('formMap'), {
                 center: {lat: 51.4421635, lng: -2.5773008},
                 zoom: 15
@@ -135,6 +139,8 @@ require 'config.php';
             if (marker) {
                 marker.setMap(null); // Remove previous marker
             }
+
+            // Place a marker on the map
             marker = new google.maps.Marker({
                 position: location,
                 map: formMap
@@ -156,134 +162,157 @@ require 'config.php';
             document.getElementById('longitude').value = ''; // Clear longitude input
         }
 
-    </script>
-    <script>
-    function handleFormSubmission(event) {
-        if (!marker) {
-            alert("Please place a marker on the map before submitting the form.");
-            event.preventDefault(); // Prevent form submission
+        function handleFormSubmission(event) {
+            if (!marker) {
+                alert("Please place a marker on the map before submitting the form.");
+                event.preventDefault(); // Prevent form submission
+            }
         }
-    }
-</script>
-
+    </script>
 </head>
+
 <body onload="initFormMap()">
-<div class="form_container">
-    <div class="title">
-        <h1> TRESA Urban Nature Reserve Input Form <h1>
-        <h3> Completing this form will input your information regarding you Nature Reserve  into the TRESA Urban Nature Reserve Database</h3>
-    </div>
-    <form action="formpost1.php" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
+    
+    <!-- Form container -->
+    <div class="form_container">
 
-        <div>
-            <label for="uname">Name:</label>
-            <input type="text" id="uname" name="uname" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <label for="mapinputs">Please place a Marker on the location of your Nature Reserve</label>
-            <div id="formMap" style="height: 350px; width: 100%;"></div>
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
-        <div>
-            <input type="button" id="removeButton" value="Remove Marker" style="display: none;" onclick="removeMarker()">
-        </div>
-        <div>
-            <label for="garden-description">Garden Description:</label><br>
-            <textarea id="garden-description" name="garden-description" rows="4" cols="50" required></textarea>
-        </div>
-        <div>
-            <label for="dimensions">Dimensions (m²):</label>
-            <input type="number" id="dimensions" name="dimensions" required>
+        <!-- Form title -->
+        <div class="title">
+            <h1> TRESA Urban Nature Reserve Input Form <h1>
+            <h3> Completing this form will input your information regarding you Nature Reserve  into the TRESA Urban Nature Reserve Database</h3>
         </div>
 
-        <div class="categoriesContainer">
+        <!-- Form -->
+        <form action="formpost1.php" method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmission(event)">
+
             <div>
-                <label for="categories">Categories:</label><br>
+                <label for="uname">Name:</label>
+                <input type="text" id="uname" name="uname" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <label for="mapinputs">Please place a Marker on the location of your Nature Reserve</label>
+                <div id="formMap" style="height: 350px; width: 100%;"></div>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <div>
+                <input type="button" id="removeButton" value="Remove Marker" style="display: none;" onclick="removeMarker()">
+            </div>
+            <div>
+                <label for="garden-description">Garden Description:</label><br>
+                <textarea id="garden-description" name="garden-description" rows="4" cols="50" required></textarea>
+            </div>
+            <div>
+                <label for="dimensions">Dimensions (m²):</label>
+                <input type="number" id="dimensions" name="dimensions" required>
             </div>
 
-            <div id="categoriesDropdown" class="categories">
-                <div class="flora">
-                    <div class="checkbox-wrapper">
-                        <label for="trees">Trees</label>
-                        <input type="checkbox" id="trees" name="categories[]" value="trees">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="flowers">Flowers</label>
-                        <input type="checkbox" id="flowers" name="categories[]" value="flowers">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="hedges">Hedges</label>
-                        <input type="checkbox" id="hedges" name="categories[]" value="hedges">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="grasses">Grasses</label>
-                        <input type="checkbox" id="grasses" name="categories[]" value="grasses">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="ponds">Ponds</label>
-                        <input type="checkbox" id="ponds" name="categories[]" value="ponds">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="other_flora">Other Flora</label>
-                        <input type="checkbox" id="other_flora" name="categories[]" value="other_flora">
-                    </div>
+            <div class="categoriesContainer">
+                <div>
+                    <label for="categories">Categories:</label><br>
                 </div>
 
-                <div class="fauna">
-                    <div class="checkbox-wrapper">
-                        <label for="birds">Birds</label>
-                        <input type="checkbox" id="birds" name="categories[]" value="birds">
+                <div id="categoriesDropdown" class="categories">
+                    <div class="flora">
+                        <div class="checkbox-wrapper">
+                            <label for="trees">Trees</label>
+                            <input type="checkbox" id="trees" name="categories[]" value="trees">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="flowers">Flowers</label>
+                            <input type="checkbox" id="flowers" name="categories[]" value="flowers">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="hedges">Hedges</label>
+                            <input type="checkbox" id="hedges" name="categories[]" value="hedges">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="grasses">Grasses</label>
+                            <input type="checkbox" id="grasses" name="categories[]" value="grasses">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="ponds">Ponds</label>
+                            <input type="checkbox" id="ponds" name="categories[]" value="ponds">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="other_space_for_nature">Other Space for Nature</label>
+                            <input type="checkbox" id="other_space_for_nature" name="categories[]" value="other_space_for_nature">
+                        </div>
                     </div>
-                    <div class="checkbox-wrapper">
-                        <label for="insects">Insects</label>
-                        <input type="checkbox" id="insects" name="categories[]" value="insects">
+
+                    <div class="fauna-1">
+                        <div class="checkbox-wrapper">
+                            <label for="birds">Birds</label>
+                            <input type="checkbox" id="birds" name="categories[]" value="birds">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="insects">Insects</label>
+                            <input type="checkbox" id="insects" name="categories[]" value="insects">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="butterflies">Butterflies</label>
+                            <input type="checkbox" id="butterflies" name="categories[]" value="butterflies">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="bees">Bees</label>
+                            <input type="checkbox" id="bees" name="categories[]" value="bees">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="frogs">Frogs</label>
+                            <input type="checkbox" id="frogs" name="categories[]" value="frogs">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="newts">Newts</label>
+                            <input type="checkbox" id="newts" name="categories[]" value="newts">
+                        </div>
                     </div>
-                    <div class="checkbox-wrapper">
-                        <label for="butterflies">Butterflies</label>
-                        <input type="checkbox" id="butterflies" name="categories[]" value="butterflies">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="bees">Bees</label>
-                        <input type="checkbox" id="bees" name="categories[]" value="bees">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="mammals">Mammals</label>
-                        <input type="checkbox" id="mammals" name="categories[]" value="mammals">
-                    </div>
-                    <div class="checkbox-wrapper">
-                        <label for="other_fauna">Other Fauna</label>
-                        <input type="checkbox" id="other_fauna" name="categories[]" value="other_fauna">
+
+                    <div class="fauna-2">
+                        <div class="checkbox-wrapper">
+                            <label for="bats">Bats</label>
+                            <input type="checkbox" id="bats" name="categories[]" value="bats">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="foxes">Foxes</label>
+                            <input type="checkbox" id="foxes" name="categories[]" value="foxes">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="hedgehogs">Hedgehogs</label>
+                            <input type="checkbox" id="hedgehogs" name="categories[]" value="hedgehogs">
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <label for="other_fauna">Other fauna</label>
+                            <input type="checkbox" id="other_fauna" name="categories[]" value="other_fauna">
+                        </div>
                     </div>
                 </div>
+                
+                <div style="display: flex; justify-content: center; padding-top: 1rem">
+                    <div>If selecting other please explain within description</div>
+                </div>
+
             </div>
-            
-            <div style="display: flex; justify-content: center; padding-top: 1rem">
-                <div>If selecting other please explain within description</div>
+            <div style="padding-top: 1rem">
+                <label for="image-upload">Image Upload:</label>
+                <input type="file" id="image-upload" name="image-upload" accept="image/*">
+            </div>
+            <div style="padding-top: 1rem">
+                <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
+                <input type="checkbox" id="terms" name="terms" required>
+            </div>
+            <div>
+                <h4 class="anontype">If you would like to opt out of having your data added to the map, tick the box below!</h4>
+                <label for="anon">
+                    <input type="checkbox" id="anon" name="anon">Submit anonymously?
+                </label>
             </div>
 
-        </div>
-        <div style="padding-top: 1rem">
-            <label for="image-upload">Image Upload:</label>
-            <input type="file" id="image-upload" name="image-upload" accept="image/*">
-        </div>
-        <div style="padding-top: 1rem">
-            <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
-            <input type="checkbox" id="terms" name="terms" required>
-        </div>
-        <div>
-            <h4 class="anontype">If you would like to opt out of having your data added to the map, tick the box below!</h4>
-            <label for="anon">
-                <input type="checkbox" id="anon" name="anon">Submit anonymously?
-            </label>
-        </div>
-
-        <div style="padding-top: 1rem">
-            <button type="submit">Submit</button>
-        </div>
-    </form>
-</div>
+            <div style="padding-top: 1rem">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
