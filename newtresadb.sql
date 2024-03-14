@@ -40,8 +40,20 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (1, 'Trees'),
 (2, 'Flowers'),
 (3, 'Hedges'),
-(4, 'Birds'),
-(5, 'Insects');
+(4, 'Grasses'),
+(5, 'Ponds'),
+(6, 'Other_space_for_nature'),
+(7, 'Birds'),
+(8, 'Insects'),
+(9, 'Butterflies'),
+(10, 'Bees'),
+(11, 'Frogs'),
+(12, 'Newts'),
+(13, 'Bats'),
+(14, 'Foxes'),
+(15, 'Hedgehogs'),
+(16, 'Other_fauna');
+
 
 -- --------------------------------------------------------
 
@@ -53,14 +65,6 @@ CREATE TABLE `category_has_post` (
   `FK_post_id` int(11) NOT NULL,
   `FK_category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `category_has_post`
---
-
-INSERT INTO `category_has_post` (`FK_post_id`, `FK_category_id`) VALUES
-(2, 1),
-(2, 2);
 
 -- --------------------------------------------------------
 
@@ -80,13 +84,6 @@ CREATE TABLE `privatespace_post` (
   `post_anon` varchar(45) DEFAULT NULL,
   `validated` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `privatespace_post`
---
-
-INSERT INTO `privatespace_post` (`post_id`, `post_resident_name`, `post_resident_email`, `post_lat`, `post_long`, `post_desc`, `post_dimens`, `post_image`, `post_anon`, `validated`) VALUES
-(2, 'sampledata', 'carlm@gmail.com', 51.4412, -2.58018, 'ww', '12', 0x666f726d696d616765732f61732e6a7067, '1', NULL);
 
 -- --------------------------------------------------------
 
