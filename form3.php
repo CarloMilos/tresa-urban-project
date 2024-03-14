@@ -299,7 +299,7 @@
                 <input type="file" id="image-upload" name="image-upload" accept="image/*">
             </div>
             <div style="padding-top: 1rem">
-                <label for="terms">I agree to the <a href="INSERT LINK">terms and conditions</a>:</label>
+                <label for="terms">I agree to the <a href="../tresa-urban-project/privacypolicy.html">terms and conditions</a>:</label>
                 <input type="checkbox" id="terms" name="terms" required>
             </div>
             <div>
