@@ -1,7 +1,7 @@
 <?php
 
 //Google Maps API Key
-$api_key = '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATR9HPYozaZE1YdlI1b7Fn_k34TtRXzLg&libraries=geometry"></script>';
+$api_key = '<script src="https://maps.googleapis.com/maps/api/js?key={PRIVATE_API_KEY}y"></script>';
 
 // Database connection parameters
 $host = 'localhost'; // Your MySQL host (usually 'localhost')
