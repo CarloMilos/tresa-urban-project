@@ -31,3 +31,6 @@ promoting eco-friendly behaviours and practices among community members.
 - Offer resources and guidance through the software platform to support sustainable
 initiatives, such as community gardening, wildlife conservation, and waste reduction
 efforts
+
+## Client Sign-off and Feedback:
+![TRESA Sign-OFF](https://github.com/user-attachments/assets/a4691d84-74b4-43f9-b472-a661a6cd4712)
