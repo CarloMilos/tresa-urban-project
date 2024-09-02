@@ -1,9 +1,7 @@
 # Web and Urban Map development for TRESA a Reserve Nature Organization
 
 ## Project Poster :
-
 ![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98)
-
 
 ### 1.1 Development of a Tailored Mapping Software:
 - Design and develop customised mapping software tailored to TRESA's requirements and
@@ -33,4 +31,4 @@ initiatives, such as community gardening, wildlife conservation, and waste reduc
 efforts
 
 ## Client Sign-off and Feedback:
-![TRESA Sign-OFF](https://github.com/user-attachments/assets/a4691d84-74b4-43f9-b472-a661a6cd4712)
+![TRESA Sign-OFF](https://github.com/user-attachments/assets/9a9729e2-9239-4fbd-b55f-cd029cfbce8c)
