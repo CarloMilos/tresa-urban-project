@@ -63,6 +63,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,184 +72,187 @@ header('Content-Type: text/html; charset=utf-8');
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Your custom CSS styles */
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.wrapper {
-    background: var(--white);
-    padding: 2rem;
-    max-width: 576px;
-    width: 100%;
-    border-radius: .75rem;
-    box-shadow: var(--shadow);
-    text-align: center;
-}
+        .wrapper {
+            background: var(--white);
+            padding: 2rem;
+            max-width: 576px;
+            width: 100%;
+            border-radius: .75rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
 
-.container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    max-width: 400px;
-    width: 100%;
-}
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
 
-h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-}
+        h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
 
-input[type="text"],
-input[type="email"],
-select,
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    outline: none;
-}
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+        }
 
-/* Adjusted CSS with 'text-size-adjust' */
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>');
-    background-repeat: no-repeat;
-    background-position-x: 98%;
-    background-position-y: center;
-    background-color: #ffffff;
-    text-size-adjust: 100%; /* Added */
-}
+        /* Adjusted CSS with 'text-size-adjust' */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-repeat: no-repeat;
+            background-position-x: 98%;
+            background-position-y: center;
+            background-color: #ffffff;
+            text-size-adjust: 100%;
+            /* Added */
+        }
 
 
-textarea {
-    width: 100%;
-    background: var(--light);
-    padding: 1rem;
-    border-radius: .5rem;
-    border: none;
-    outline: none;
-    resize: none;
-    margin-bottom: .5rem;
-}
+        textarea {
+            width: 100%;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: .5rem;
+            border: none;
+            outline: none;
+            resize: none;
+            margin-bottom: .5rem;
+        }
 
-.message {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
+        .message {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
 
-.stars {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
+        .stars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-.star {
-    font-size: 24px;
-    color: #ffd700; /* Changed to gold */
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+        .star {
+            font-size: 24px;
+            color: #ffd700;
+            /* Changed to gold */
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-.star:hover,
-.star.active {
-    color: #ffd700;
-}
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+        }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.btn-group {
-    display: flex;
-    grid-gap: .5rem;
-    align-items: center;
-}
+        .btn-group {
+            display: flex;
+            grid-gap: .5rem;
+            align-items: center;
+        }
 
-.btn-group .btn {
-    padding: .75rem 1rem;
-    border-radius: .5rem;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: .875rem;
-    font-weight: 500;
-}
+        .btn-group .btn {
+            padding: .75rem 1rem;
+            border-radius: .5rem;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: .875rem;
+            font-weight: 500;
+        }
 
-.btn-group .btn.submit {
-    background: var(--blue);
-    color: var(--white);
-}
+        .btn-group .btn.submit {
+            background: var(--blue);
+            color: var(--white);
+        }
 
-.btn-group .btn.submit:hover {
-    background: var(--blue-d-1);
-}
+        .btn-group .btn.submit:hover {
+            background: var(--blue-d-1);
+        }
 
-.btn-group .btn.cancel {
-    background: var(--white);
-    color: var(--blue);
-}
+        .btn-group .btn.cancel {
+            background: var(--white);
+            color: var(--blue);
+        }
 
-.btn-group .btn.cancel:hover {
-    background: var(--light);
-}
+        .btn-group .btn.cancel:hover {
+            background: var(--light);
+        }
 
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Added color transition */
-}
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Added color transition */
+        }
 
-.btn-primary {
-    background-color: #007bff;
-    border: 1px solid #ffffff;
-    color: #007bff;
-}
+        .btn-primary {
+            background-color: #007bff;
+            border: 1px solid #ffffff;
+            color: #007bff;
+        }
 
-.btn-group .btn.submit:hover {
-    background: var(--blue); /* Keep the original background color */
-}
+        .btn-group .btn.submit:hover {
+            background: var(--blue);
+            /* Keep the original background color */
+        }
 
-.btn-secondary {
-    background-color: #ffffff;
-    border: 1px solid #007bff;
-    color: #007bff;
-}
+        .btn-secondary {
+            background-color: #ffffff;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
 
-.btn-secondary:hover {
-    background-color: #f2f2f2;
-}
-
+        .btn-secondary:hover {
+            background-color: #f2f2f2;
+        }
     </style>
     <title>Form Reviews</title>
 </head>
+
 <body>
     <div class="wrapper">
         <h3>Your Opinion</h3>
@@ -294,26 +298,27 @@ textarea {
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const allStars = document.querySelectorAll('.rating .star');
-        const ratingValue = document.getElementById('ratingValue');
+        document.addEventListener("DOMContentLoaded", function() {
+            const allStars = document.querySelectorAll('.rating .star');
+            const ratingValue = document.getElementById('ratingValue');
 
-        allStars.forEach((star) => {
-            star.addEventListener('click', function () {
-                const rating = parseInt(this.dataset.value);
-                ratingValue.value = rating;
+            allStars.forEach((star) => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.value);
+                    ratingValue.value = rating;
 
-                allStars.forEach((star, index) => {
-                    if (index < rating) {
-                        star.classList.replace('bx-star', 'bxs-star');
-                    } else {
-                        star.classList.replace('bxs-star', 'bx-star');
-                    }
+                    allStars.forEach((star, index) => {
+                        if (index < rating) {
+                            star.classList.replace('bx-star', 'bxs-star');
+                        } else {
+                            star.classList.replace('bxs-star', 'bx-star');
+                        }
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
 </body>
+
 </html>
