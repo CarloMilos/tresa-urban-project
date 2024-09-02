@@ -2,7 +2,7 @@
 
 ## Project Poster :
 
-[project poster.pptx](https://github.com/user-attachments/files/16838326/project.poster.pptx)
+![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98)
 
 
 ### 1.1 Development of a Tailored Mapping Software:
