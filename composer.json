@@ -1,0 +1,18 @@
+{
+    "name": "rayan/tresa-urban-project",
+    "description": "\u0007\tLed a Team to develop a fully integrated web system and Urban map using JavaScript, PHP for TRESA",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rayan\\TresaUrbanProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rayan Louahche",
+            "email": "rayanlouahche2004@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
