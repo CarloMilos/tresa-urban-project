@@ -9,10 +9,6 @@
 
 A comprehensive web system and interactive urban mapping solution developed for TRESA (Totterdown Residents Environmental & Social Action) to manage and visualize urban green spaces and nature reserves.
 
-[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
-[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Google Maps API](https://img.shields.io/badge/Google_Maps_API-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)](https://developers.google.com/maps)
 
 ## 🎯 Project Overview
 
@@ -33,9 +29,9 @@ This project delivers a tailored mapping and data collection system for TRESA, e
 
 ## 🛠️ Technical Stack
 
+- **Frontend**: JavaScript, Vue.js, HTML5, CSS3
 - **Backend**: PHP 8.1.2
 - **Database**: MySQL (MariaDB 10.4.22)
-- **Frontend**: HTML5, CSS3, JavaScript
 - **Maps Integration**: Google Maps API
 - **Visualization**: Chart.js
 - **Styling**: Bootstrap 5
