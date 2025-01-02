@@ -3,9 +3,13 @@
 ![image](https://github.com/user-attachments/assets/30717a42-18e9-497f-9010-7d57312c2131)
 
 
-## Poster :
+## Poster
 
-<src align="center">![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98) </src>
+<div align="center">
+  
+![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98)
+
+</div>
 
 
 A comprehensive web system and interactive urban mapping solution developed for TRESA (Totterdown Residents Environmental & Social Action) to manage and visualize urban green spaces and nature reserves.
