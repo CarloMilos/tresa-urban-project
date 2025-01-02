@@ -2,7 +2,7 @@
 
 ![image](https://github.com/user-attachments/assets/30717a42-18e9-497f-9010-7d57312c2131)
 
-## Project Poster :
+## Poster :
 
 ![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98)
 
@@ -118,8 +118,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Contact
 
 For questions or support, please contact:
-- Project Manager: [Your Name](mailto:your.email@example.com)
-- TRESA Organization: [suzanne.audrey@btinternet.com](mailto:suzanne.audrey@btinternet.com)
+- Project Manager: [Rayan](mailto:rayanlouahche2004@gmail.com.email)
+- TRESA Organization: [Suzanne](mailto:suzanne.audrey@btinternet.com)
 
 ## 🙏 Acknowledgments
 
