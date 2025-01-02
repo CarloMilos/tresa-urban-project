@@ -1,6 +1,10 @@
 # TRESA Urban Nature Reserve Project 🌿
 
 ![image](https://github.com/user-attachments/assets/30717a42-18e9-497f-9010-7d57312c2131)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PHP Version](https://img.shields.io/badge/PHP-8.1.2-777BB4.svg)](https://php.net)
+[![GitHub issues](https://img.shields.io/github/issues/RyanL2004/tresa-urban-project)](https://github.com/RyanL2004/tresa-urban-project/issues)
+[![Code style: PSR-12](https://img.shields.io/badge/code%20style-PSR--12-brightgreen.svg)](https://www.php-fig.org/psr/psr-12/)
 
 ## Poster :
 
