@@ -118,7 +118,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Contact
 
 For questions or support, please contact:
-- Project Manager: [Rayan](mailto:rayanlouahche2004@gmail.com.email)
+- Project Manager: [Rayan](mailto:rayanlouahche2004@gmail.com)
 - TRESA Organization: [Suzanne](mailto:suzanne.audrey@btinternet.com)
 
 ## 🙏 Acknowledgments
