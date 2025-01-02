@@ -1,5 +1,10 @@
 # TRESA Urban Nature Reserve Project 🌿
+
 ![image](https://github.com/user-attachments/assets/30717a42-18e9-497f-9010-7d57312c2131)
+
+## Project Poster :
+
+![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98)
 
 
 A comprehensive web system and interactive urban mapping solution developed for TRESA (Totterdown Residents Environmental & Social Action) to manage and visualize urban green spaces and nature reserves.
@@ -128,40 +133,8 @@ For questions or support, please contact:
 - All contributors who have helped shape this project
 
 ---
-⭐️ If you find this project useful, please consider giving it a star!
-
-
-# Web and Urban Map development for TRESA a Reserve Nature Organization
-
-## Project Poster :
-![TRESA POSTER](https://github.com/user-attachments/assets/3828d305-82db-4805-b431-8e7b17ddde98)
-
-### 1.1 Development of a Tailored Mapping Software:
-- Design and develop customised mapping software tailored to TRESA's requirements and
-the unique characteristics of Totterdown's green spaces.
-
-### 1.2 Enhance Data Collection and Analysis:
-- Develop a systematic approach to data collection, including the design of digital forms and
-databases for efficient data capture.
-- Implement analytical tools to process and analyse collected data, generating valuable
-insights into green space usage patterns, environmental factors, and community
-preferences.
-- Incorporate features such as geospatial visualisation, interactive mapping, and data
-overlay capabilities to provide comprehensive information about green space distribution
-and accessibility.
-
-### 1.3 Ensure User-Friendly Experience:
-- Prioritise user experience in software design, focusing on intuitive interfaces, simplified
-workflows, and accessible functionalities to encourage community engagement.
-- Conduct user testing and feedback sessions to iteratively refine the software interface and
-enhance usability based on user preferences and needs.
-
-### 1.4 Facilitate Sustainable Practices:
-- Integrate sustainability principles into the design and development of software features,
-promoting eco-friendly behaviours and practices among community members.
-- Offer resources and guidance through the software platform to support sustainable
-initiatives, such as community gardening, wildlife conservation, and waste reduction
-efforts
-
 ## Client Sign-off and Feedback:
+
 ![TRESA Sign-OFF](https://github.com/user-attachments/assets/9a9729e2-9239-4fbd-b55f-cd029cfbce8c)
+
+⭐️ If you find this project useful, please consider giving it a star!
