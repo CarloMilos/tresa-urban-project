@@ -1,9 +1,9 @@
-# 🌿 TRESA Urban Nature Reserve Map system 
+<h1 align="center">🌿 TRESA Urban Nature Reserve Map system</h1>
 
 ![image](https://github.com/user-attachments/assets/30717a42-18e9-497f-9010-7d57312c2131)
 
 
-<h2 align="center">🖼️ Project</h2>
+<h2 align="center">🖼️ Poster</h2>
 
 <div align="center">
   
