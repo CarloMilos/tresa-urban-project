@@ -1,5 +1,6 @@
 <h1 align="center">🌿 TRESA Urban Nature Reserve Map system</h1>
-A comprehensive web system and interactive urban mapping solution developed for TRESA (Totterdown Residents Environmental & Social Action) to manage and visualize urban green spaces and nature reserves.
+<p>A comprehensive web system and interactive urban mapping solution developed for TRESA (Totterdown Residents Environmental & Social Action) to manage and visualize urban green spaces and nature reserves.</p>
+
 ![image](https://github.com/user-attachments/assets/30717a42-18e9-497f-9010-7d57312c2131)
 
 
